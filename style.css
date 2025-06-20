@@ -1,65 +1,108 @@
+/* --- CONFIGURACIÓN GENERAL Y PALETA DE COLORES SANTANDER --- */
+:root {
+    --rojo-santander: #d42e12;
+    --verde-santander: #00843D;
+    --negro-principal: #2c2c2c;
+    --gris-fondo: #f4f7f6;
+    --blanco: #ffffff;
+    --sombra: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* --- ESTILO GENERAL DE LA PÁGINA --- */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  padding: 30px;
+    font-family: 'Poppins', 'Arial', sans-serif; /* Usamos Poppins si está disponible, si no Arial */
+    background-color: var(--gris-fondo);
+    color: var(--negro-principal);
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.card {
-  width: 600px;
-  margin: auto;
-  padding: 20px;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+/* --- ESTILO DEL CONTENEDOR PRINCIPAL --- */
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: var(--blanco);
+    padding: 35px 40px;
+    border-radius: 16px;
+    box-shadow: var(--sombra);
+    box-sizing: border-box;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+.container h1 {
+    text-align: center;
+    font-size: 2.2em;
+    color: var(--rojo-santander);
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
 }
 
-.logo {
-  width: 80px;
+/* --- ESTILO DEL FORMULARIO #carnet-form --- */
+#carnet-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacio entre cada elemento del formulario */
 }
 
-.header h1 {
-  font-size: 20px;
-  color: #003300;
+#carnet-form label {
+    font-weight: 500;
+    font-size: 0.95em;
+    margin-bottom: -12px; /* Acerca la etiqueta al campo de entrada */
+    color: #555;
 }
 
-.body {
-  display: flex;
-  margin-top: 20px;
-  gap: 20px;
-  align-items: flex-start;
+#carnet-form input[type="text"],
+#carnet-form input[type="file"],
+#carnet-form select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: 'Poppins', 'Arial', sans-serif;
+    box-sizing: border-box;
+    transition: all 0.2s;
 }
 
-.foto {
-  width: 120px;
-  height: 150px;
-  object-fit: cover;
-  border: 3px solid #007a33; /* Verde */
-  border-radius: 8px;
+#carnet-form input:focus,
+#carnet-form select:focus {
+    outline: none;
+    border-color: var(--verde-santander);
+    box-shadow: 0 0 0 4px rgba(0, 132, 61, 0.1);
 }
 
-.info {
-  flex-grow: 1;
-  font-size: 14px;
+#carnet-form button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: var(--blanco);
+    background-color: var(--rojo-santander);
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-top: 10px;
 }
 
-.qr {
-  width: 100px;
-  height: 100px;
+#carnet-form button[type="submit"]:hover {
+    transform: scale(1.02);
+    background-color: #b9270f;
 }
 
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #c40000; /* Rojo */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+/* Contenedor para el campo opcional 'Cargo' */
+#cargo-container {
+    display: none; /* Se mantiene oculto hasta que JS lo muestre */
+}
+
+/* Contenedor donde aparecerá el carnet generado */
+#carnet-container {
+    border-top: 2px solid #eee;
+    margin-top: 40px;
+    padding-top: 30px;
 }
