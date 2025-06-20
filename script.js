@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('carnet-sangre').innerText = tipoSangre;
         document.getElementById('carnet-tel').innerText = telEmergencia;
 
-        // --- URL FINAL Y CORRECTA PARA EL CÓDIGO QR ---
         const verificationUrl = `https://danni2-cmd.github.io/carnet-de-lucha/index.html#verificar?id=${numDoc}`;
         
         if (qrCodeInstance) {
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             correctLevel: QRCode.CorrectLevel.H
         });
 
-        carnetContainer.style.display = 'flex';
+        carnetContainer.style.display = 'block';
     });
 
     document.getElementById('descargar-pdf').addEventListener('click', () => {

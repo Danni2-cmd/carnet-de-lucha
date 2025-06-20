@@ -3,102 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carnet Virtual - Liga Santandereana de Lucha Olímpica</title>
+    <title>Carnetización - Liga Santandereana de Lucha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Sistema de Carnetización</h1>
-        <p>Liga Santandereana de Lucha Olímpica</p>
+    <header class="main-header">
+        <img src="logo.png" alt="Logo de la Liga" class="header-logo">
+        <h1>Portal de Carnetización</h1>
+        <h2>Liga Santandereana de Lucha Olímpica</h2>
+    </header>
 
-        <form id="registroForm">
-            <div class="form-grid">
-                <div class="form-group">
-                    <label for="nombres">Nombres y Apellidos Completos</label>
-                    <input type="text" id="nombres" required>
+    <main class="container">
+        <div class="form-container">
+            <h3>Registro de Afiliado</h3>
+            <form id="registroForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombres">Nombres y Apellidos</label>
+                        <input type="text" id="nombres" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rol">Rol en la Liga</label>
+                        <select id="rol" class="form-input">
+                            <option value="Deportista">Deportista</option>
+                            <option value="Entrenador">Entrenador</option>
+                            <option value="Juez">Juez</option>
+                            <option value="Administrativo">Administrativo</option>
+                        </select>
+                    </div>
+                     <div class="form-group">
+                        <label for="numDoc">Número de Documento</label>
+                        <input type="text" id="numDoc" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoDoc">Tipo de Documento</label>
+                        <select id="tipoDoc" class="form-input">
+                            <option value="CC">C.C.</option>
+                            <option value="TI">T.I.</option>
+                            <option value="CE">C.E.</option>
+                            <option value="PA">Pasaporte</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoSangre">Tipo de Sangre y RH</label>
+                        <input type="text" id="tipoSangre" class="form-input" placeholder="Ej: O+" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telEmergencia">Teléfono de Emergencia</label>
+                        <input type="tel" id="telEmergencia" class="form-input" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="foto">Foto tipo Documento (Fondo Blanco)</label>
+                        <input type="file" id="foto" class="form-input" accept="image/*" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="tipoDoc">Tipo de Documento</label>
-                    <select id="tipoDoc">
-                        <option value="CC">Cédula de Ciudadanía</option>
-                        <option value="TI">Tarjeta de Identidad</option>
-                        <option value="CE">Cédula de Extranjería</option>
-                        <option value="PA">Pasaporte</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="numDoc">Número de Documento</label>
-                    <input type="text" id="numDoc" required>
-                </div>
-                <div class="form-group">
-                    <label for="telEmergencia">Teléfono de Emergencia</label>
-                    <input type="tel" id="telEmergencia" required>
-                </div>
-                <div class="form-group">
-                    <label for="tipoSangre">Tipo de Sangre y RH</label>
-                    <input type="text" id="tipoSangre" placeholder="Ej: O+" required>
-                </div>
-                <div class="form-group">
-                    <label for="rol">Rol en la Liga</label>
-                    <select id="rol">
-                        <option value="Deportista">Deportista</option>
-                        <option value="Entrenador">Entrenador</option>
-                        <option value="Juez">Juez</option>
-                        <option value="Administrativo">Administrativo</option>
-                    </select>
-                </div>
-                <div class="form-group full-width">
-                    <label for="foto">Foto tipo Documento (Fondo Blanco)</label>
-                    <input type="file" id="foto" accept="image/*" required>
-                </div>
-            </div>
-            <button type="submit">Generar Carnet Virtual</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Generar Carnet</button>
+            </form>
+        </div>
 
         <div id="carnet-container" class="carnet-container" style="display: none;">
-            <h2>Carnet Generado</h2>
-            
+            <h3>Vista Previa del Carnet</h3>
             <div id="carnet-virtual">
                 <div class="carnet-header">
                     <img src="logo.png" alt="Logo Liga" id="logo-img">
                     <div class="header-text">
-                        <h3>Liga Santandereana</h3>
-                        <p>de Lucha Olímpica</p>
+                        <h4>LIGA SANTANDEREANA DE LUCHA</h4>
                     </div>
                 </div>
                 <div class="carnet-body">
                     <div class="foto-container">
-                        <img id="carnet-foto" src="" alt="Foto Deportista">
+                        <img id="carnet-foto" src="" alt="Foto Afiliado">
                     </div>
-                    <div class="datos-container">
-                        <p id="carnet-nombres">NOMBRES COMPLETOS</p>
-                        <strong id="carnet-rol">ROL</strong>
-                        <hr>
-                        <p class="carnet-label">DOCUMENTO:</p>
-                        <p id="carnet-doc">CC 123456789</p>
-                        <p class="carnet-label">TIPO SANGRE:</p>
-                        <p id="carnet-sangre">O+</p>
-                        <p class="carnet-label">TEL. EMERGENCIA:</p>
-                        <p id="carnet-tel">300 123 4567</p>
+                    <div class="datos-principales">
+                        <p id="carnet-nombres" class="nombre-afiliado">NOMBRES COMPLETOS</p>
+                        <p id="carnet-rol" class="rol-afiliado">ROL</p>
+                    </div>
+                    <div class="datos-secundarios">
+                        <div class="dato-item">
+                            <label>DOCUMENTO</label>
+                            <p id="carnet-doc">CC 123456789</p>
+                        </div>
+                        <div class="dato-item">
+                            <label>SANGRE / RH</label>
+                            <p id="carnet-sangre">O+</p>
+                        </div>
+                         <div class="dato-item">
+                            <label>TEL. EMERGENCIA</label>
+                            <p id="carnet-tel">300 123 4567</p>
+                        </div>
                     </div>
                     <div class="qr-container">
                          <div id="carnet-qr"></div>
+                         <p>Verificar</p>
                     </div>
                 </div>
                  <div class="carnet-footer">
-                    <p>Válido hasta: 31/12/2025</p>
-                </div>
+                    <div></div>
+                 </div>
             </div>
             
-            <button id="descargar-pdf">Descargar Carnet en PDF</button>
+            <button id="descargar-pdf" class="btn btn-secondary">Descargar en PDF</button>
         </div>
-    </div>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="qrcode.min.js"></script>
     <script src="script.js"></script>
-
 </body>
 </html>
