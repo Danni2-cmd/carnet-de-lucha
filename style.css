@@ -1,131 +1,77 @@
-/* --- ESTILOS DEL PORTAL (APROBADOS - SIN CAMBIOS) --- */
-:root {
-    --rojo-santander: #d42e12;
-    --verde-santander: #00843D;
-    --amarillo-santander: #FCD116; 
-    --negro-principal: #2c2c2c;
-    --gris-oscuro: #333333;
-    --gris-claro: #f0f2f5;
-    --blanco: #ffffff;
-    --sombra: 0 8px 24px rgba(0, 0, 0, 0.1);
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
 }
-body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); color: var(--negro-principal); margin: 0; padding: 30px; }
-.main-header { text-align: center; margin-bottom: 40px; }
-.header-logo { width: 70px; }
-.main-header h1 { color: var(--negro-principal); margin: 10px 0 5px 0; font-size: 2.2em; }
-.main-header h2 { color: var(--verde-santander); margin: 0; font-size: 1.1em; font-weight: 400; }
-.container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; }
-.form-container, .carnet-container { background: var(--blanco); padding: 35px; border-radius: 16px; box-shadow: var(--sombra); width: 100%; max-width: 600px; box-sizing: border-box; }
-.form-container h3, .carnet-container h3 { text-align: center; font-size: 1.6em; color: var(--rojo-santander); margin-top: 0; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-.form-group.full-width { grid-column: span 2; }
-.form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9em; }
-.form-input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: all 0.2s; }
-.form-input:focus { outline: none; border-color: var(--rojo-santander); box-shadow: 0 0 0 4px rgba(212, 46, 18, 0.1); }
-.btn { width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
-.btn:hover { transform: scale(1.02); }
-.btn-primary { background-color: var(--rojo-santander); color: var(--blanco); margin-top: 20px; }
-.btn-secondary { background-color: var(--verde-santander); color: var(--blanco); margin-top: 20px; max-width: 300px; }
 
-/* --- DISEÑO FINAL v6 (AJUSTES AGRESIVOS DE TAMAÑO) --- */
-#carnet-virtual {
-    width: 428px; /* 85.6mm a ~120DPI */
-    height: 270px; /* 54mm a ~120DPI */
-    box-sizing: border-box;
-    background-color: var(--blanco);
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 16px;
-    box-shadow: var(--sombra);
-    border: 1px solid #ddd;
+.container {
+  background: white;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
 }
-.carnet-header {
-    display: flex;
-    align-items: center;
-    padding: 8px 10px; /* AJUSTE: Menos padding */
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
-}
-.carnet-header img { height: 28px; width: 28px; margin-right: 8px; } /* AJUSTE: Tamaño logo */
-.carnet-header span { font-size: 10px; font-weight: 700; color: var(--negro-principal); } /* AJUSTE: Tamaño fuente */
-.carnet-body { display: flex; padding: 12px; gap: 12px; flex-grow: 1; } /* AJUSTE: Menos padding y gap */
-.foto-container { width: 110px; height: 140px; flex-shrink: 0; } /* AJUSTE: Tamaño foto */
-#carnet-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
 
-.info-container { display: flex; flex-direction: column; flex-grow: 1; min-width: 0; /* Evita desbordamiento */ }
-.info-nombre p {
-    font-size: 18px; /* AJUSTE DRÁSTICO: Tamaño fuente nombre */
-    font-weight: 700; /* AJUSTE: Menos grueso */
-    margin: 0 0 2px 0;
-    line-height: 1.2;
-    word-break: break-word; 
+input, select, button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
-.info-nombre span {
-    font-size: 12px; /* AJUSTE: Tamaño fuente documento */
-    color: #666;
-}
-.rol-barra {
-    padding: 4px 8px; /* AJUSTE: Menos padding */
-    margin: 8px 0; /* AJUSTE: Menos margen */
-    border-radius: 5px;
-    text-align: center;
-}
-.rol-barra span {
-    font-size: 12px; /* AJUSTE DRÁSTICO: Tamaño fuente rol */
-    font-weight: 700;
-    color: var(--blanco);
-    text-transform: uppercase;
-}
-.info-detalles {
-    display: flex;
-    margin-top: auto; /* EMPUJA ESTE BLOQUE HACIA ABAJO */
-    align-items: flex-end;
-    width: 100%;
-    gap: 10px; /* AJUSTE: Espacio entre detalles y QR */
-}
-.detalles-contacto {
-    font-size: 10px; /* AJUSTE DRÁSTICO: Tamaño fuente detalles */
-    line-height: 1.4;
-    flex-grow: 1;
-}
-.detalles-contacto label {
-    font-weight: 700;
-    color: #333;
-    display: block;
-}
-.detalles-contacto span {
-    color: #555;
-    font-weight: 500;
-}
-#carnet-sangre {
-    font-size: 12px; /* AJUSTE: Tamaño fuente sangre */
-    font-weight: 700;
-    margin-top: 4px;
-    display: block;
-}
-#carnet-sangre::before { content: ""; }
 
-.qr-code {
-    width: 70px; /* AJUSTE: QR más pequeño */
-    height: 70px;
-    flex-shrink: 0;
+button {
+  background-color: #007700;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
-.qr-code img { width: 100% !important; height: 100% !important; display: block; }
 
-/* COLORES DINÁMICOS (SIN CAMBIOS) */
-[data-rol="deportista"] .rol-barra { background-color: var(--amarillo-santander); }
-[data-rol="deportista"] .info-nombre p { color: var(--amarillo-santander); }
-[data-rol="entrenador"] .rol-barra { background-color: var(--verde-santander); }
-[data-rol="entrenador"] .info-nombre p { color: var(--verde-santander); }
-[data-rol="juez"] .rol-barra { background-color: var(--rojo-santander); }
-[data-rol="juez"] .info-nombre p { color: var(--rojo-santander); }
-[data-rol="administrativo"] .rol-barra { background-color: var(--gris-oscuro); }
-[data-rol="administrativo"] .info-nombre p { color: var(--gris-oscuro); }
+#carnet {
+  width: 350px;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 2px solid #004d00;
+  border-radius: 12px;
+  padding: 12px;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff;
+  position: relative;
+}
 
-@media (max-width: 700px) {
-    .form-grid { grid-template-columns: 1fr; }
-    .form-group.full-width { grid-column: span 1; }
-    body { padding: 15px; }
+#carnet img.foto {
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #999;
+}
+
+#carnet .info {
+  flex: 1;
+  padding-left: 12px;
+  font-size: 12px;
+}
+
+#carnet .logo {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 60px;
+}
+
+#carnet h2 {
+  font-size: 14px;
+  margin: 4px 0;
+  color: #004d00;
+}
+
+#carnet .qr {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 60px;
 }
