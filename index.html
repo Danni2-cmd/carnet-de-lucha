@@ -6,7 +6,7 @@
     <title>Carnetización - Liga Santandereana de Lucha</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -67,43 +67,45 @@
 
         <div id="carnet-container" class="carnet-container" style="display: none;">
             <h3>Vista Previa del Carnet</h3>
+            
             <div id="carnet-virtual">
-                <div class="carnet-header">
-                    <img src="logo.png" alt="Logo Liga" id="logo-img">
-                    <div class="header-text">
-                        <h4>LIGA SANTANDEREANA DE LUCHA</h4>
+                <div class="carnet-top">
+                    <div class="logo-container-carnet">
+                        <img src="logo.png" id="logo-img" alt="Logo">
                     </div>
+                    <div class="title-container-carnet">
+                        <h4>LIGA SANTANDEREANA</h4>
+                        <p>DE LUCHA OLÍMPICA</p>
+                    </div>
+                </div>
+                <div class="foto-container">
+                    <img id="carnet-foto" src="" alt="Foto">
                 </div>
                 <div class="carnet-body">
-                    <div class="foto-container">
-                        <img id="carnet-foto" src="" alt="Foto Afiliado">
-                    </div>
-                    <div class="datos-principales">
-                        <p id="carnet-nombres" class="nombre-afiliado">NOMBRES COMPLETOS</p>
-                        <p id="carnet-rol" class="rol-afiliado">ROL</p>
-                    </div>
-                    <div class="datos-secundarios">
-                        <div class="dato-item">
+                    <p id="carnet-nombres" class="nombre-afiliado">NOMBRE COMPLETO APELLIDO</p>
+                    <p id="carnet-rol" class="rol-afiliado">ROL ASIGNADO</p>
+                    <div class="info-grid">
+                        <div class="info-item">
                             <label>DOCUMENTO</label>
-                            <p id="carnet-doc">CC 123456789</p>
+                            <span id="carnet-doc">C.C. 123456789</span>
                         </div>
-                        <div class="dato-item">
-                            <label>SANGRE / RH</label>
-                            <p id="carnet-sangre">O+</p>
-                        </div>
-                         <div class="dato-item">
-                            <label>TEL. EMERGENCIA</label>
-                            <p id="carnet-tel">300 123 4567</p>
+                        <div class="info-item">
+                            <label>SANGRE Y RH</label>
+                            <span id="carnet-sangre">O+</span>
                         </div>
                     </div>
-                    <div class="qr-container">
-                         <div id="carnet-qr"></div>
-                         <p>Verificar</p>
+                     <div class="info-item-full">
+                        <label>CONTACTO DE EMERGENCIA</label>
+                        <span id="carnet-tel">300 123 4567</span>
                     </div>
                 </div>
-                 <div class="carnet-footer">
-                    <div></div>
-                 </div>
+                <div class="carnet-footer">
+                    <div id="carnet-qr" class="qr-code"></div>
+                    <div class="footer-text">
+                        <p>www.ligaluchasantander.com</p>
+                        <span>VÁLIDO 2025</span>
+                    </div>
+                </div>
             </div>
             
             <button id="descargar-pdf" class="btn btn-secondary">Descargar en PDF</button>
