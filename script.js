@@ -68,11 +68,15 @@ document.addEventListener("DOMContentLoaded", function () {
 function descargarPDF() {
   const carnet = document.getElementById("carnet");
   const opt = {
-    margin: 0.2,
+    margin: 0,
     filename: 'carnet_digital.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    image: { type: 'jpeg', quality: 1.0 },
+    html2canvas: { scale: 4 }, // Aumenta la escala para mayor calidad
+    jsPDF: { 
+      unit: 'mm', 
+      format: [85.6, 53.98], // Tamaño exacto de tarjeta de crédito
+      orientation: 'landscape' // Orientación horizontal
+    }
   };
   html2pdf().from(carnet).set(opt).save();
 }
