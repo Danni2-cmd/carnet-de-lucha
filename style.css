@@ -2,9 +2,9 @@
 :root {
     --rojo-santander: #d42e12;
     --verde-santander: #00843D;
-    --amarillo-santander: #FCD116; /* Color para rol Deportista */
+    --amarillo-santander: #FCD116; 
     --negro-principal: #2c2c2c;
-    --gris-oscuro: #333333; /* Color para rol Administrativo */
+    --gris-oscuro: #333333;
     --gris-claro: #f0f2f5;
     --blanco: #ffffff;
     --sombra: 0 8px 24px rgba(0, 0, 0, 0.1);
@@ -27,120 +27,49 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); 
 .btn-primary { background-color: var(--rojo-santander); color: var(--blanco); margin-top: 20px; }
 .btn-secondary { background-color: var(--verde-santander); color: var(--blanco); margin-top: 20px; max-width: 300px; }
 
-/* --- NUEVO DISEÑO DE CARNET HORIZONTAL (v4 - AJUSTES FINALES) --- */
+/* --- DISEÑO FINAL DEL CARNET (v5 - Basado en Píxeles) --- */
 #carnet-virtual {
-    width: 85.6mm;
-    height: 53.98mm;
+    /* AJUSTE A PÍXELES PARA MEJOR VISUALIZACIÓN EN PANTALLA */
+    width: 428px; /* Ancho basado en la proporción 85.6 */
+    height: 270px; /* Alto basado en la proporción 54 */
     box-sizing: border-box;
     background-color: var(--blanco);
     font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 3.18mm;
+    border-radius: 16px;
     box-shadow: var(--sombra);
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
 }
 .carnet-header {
     display: flex;
     align-items: center;
-    padding: 2.5mm; /* AJUSTE: Menos padding vertical */
+    padding: 10px;
     background-color: #f5f5f5;
     border-bottom: 1px solid #ddd;
-    height: 9mm; /* AJUSTE: Altura fija */
-    box-sizing: border-box;
 }
-.carnet-header img {
-    height: 5mm; /* AJUSTE: Tamaño del logo */
-    width: 5mm;
-    margin-right: 2mm;
-}
-.carnet-header span {
-    font-size: 2mm; /* AJUSTE: Tamaño de fuente del header */
-    font-weight: 700;
-    color: var(--negro-principal);
-}
+.carnet-header img { height: 30px; width: 30px; margin-right: 10px; }
+.carnet-header span { font-size: 11px; font-weight: 700; color: var(--negro-principal); }
+.carnet-body { display: flex; padding: 15px; gap: 15px; flex-grow: 1; }
+.foto-container { width: 120px; height: 150px; flex-shrink: 0; }
+#carnet-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
 
-.carnet-body {
-    display: flex;
-    padding: 3mm;
-    gap: 3.5mm; /* AJUSTE: Espacio entre foto e info */
-    flex-grow: 1;
-    align-items: flex-start; /* AJUSTE: Alinea los items arriba */
-}
-.foto-container {
-    width: 24mm;  /* AJUSTE: Ancho de la foto */
-    height: 31mm; /* AJUSTE: Altura de la foto */
-    flex-shrink: 0;
-}
-#carnet-foto {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 2mm;
-}
-
-.info-container {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    height: 100%; /* Ocupa toda la altura disponible en el body */
-}
-.info-nombre p {
-    font-size: 4mm; /* AJUSTE: Tamaño de fuente del nombre */
-    font-weight: 900;
-    margin: 0 0 1mm 0; /* AJUSTE: Margen inferior */
-    line-height: 1;
-    word-break: break-word; /* Evita que nombres largos rompan el layout */
-}
-.info-nombre span {
-    font-size: 2.2mm; /* AJUSTE: Tamaño de fuente del documento */
-    color: #666;
-}
-.rol-barra {
-    padding: 1.2mm 3mm; /* AJUSTE: Padding de la barra */
-    margin: 2.5mm 0; /* AJUSTE: Margen vertical */
-    border-radius: 1.5mm;
-    text-align: center;
-}
-.rol-barra span {
-    font-size: 2.5mm; /* AJUSTE: Tamaño de fuente del rol */
-    font-weight: 700;
-    color: var(--blanco);
-    text-transform: uppercase;
-}
-.info-detalles {
-    display: flex;
-    margin-top: auto; /* EMPUJA ESTE BLOQUE HACIA ABAJO */
-    align-items: flex-end;
-    width: 100%;
-}
-.detalles-contacto {
-    font-size: 2mm; /* AJUSTE: Tamaño de fuente de detalles */
-    line-height: 1.3;
-    flex-grow: 1;
-}
-.detalles-contacto label {
-    font-weight: 700;
-    color: #333;
-    display: block; /* Para que el span se ponga abajo */
-}
-.detalles-contacto span {
-    margin: 0;
-    color: #555;
-    font-weight: 500;
-}
-#carnet-sangre { font-size: 2.5mm; font-weight: 700; margin-top: 1mm; display: block; }
-#carnet-sangre::before { content: ""; } /* Quita la barra de la sangre */
-
-.qr-code {
-    width: 16mm;  /* AJUSTE: Tamaño del QR */
-    height: 16mm;
-    flex-shrink: 0;
-}
+.info-container { display: flex; flex-direction: column; flex-grow: 1; }
+.info-nombre p { font-size: 22px; font-weight: 900; margin: 0 0 5px 0; line-height: 1.1; word-break: break-word; }
+.info-nombre span { font-size: 14px; color: #666; }
+.rol-barra { padding: 5px 10px; margin: 10px 0; border-radius: 5px; text-align: center; }
+.rol-barra span { font-size: 14px; font-weight: 700; color: var(--blanco); text-transform: uppercase; }
+.info-detalles { display: flex; margin-top: auto; align-items: flex-end; width: 100%; }
+.detalles-contacto { font-size: 11px; line-height: 1.5; flex-grow: 1; }
+.detalles-contacto label { font-weight: 700; color: #333; display: block; }
+.detalles-contacto span { color: #555; font-weight: 500; }
+#carnet-sangre { font-size: 14px; font-weight: 700; margin-top: 5px; display: block; }
+#carnet-sangre::before { content: ""; }
+.qr-code { width: 80px; height: 80px; flex-shrink: 0; }
 .qr-code img { width: 100% !important; height: 100% !important; display: block; }
 
-/* COLORES DINÁMICOS BASADOS EN EL ROL (SIN CAMBIOS) */
+/* COLORES DINÁMICOS (SIN CAMBIOS) */
 [data-rol="deportista"] .rol-barra { background-color: var(--amarillo-santander); }
 [data-rol="deportista"] .info-nombre p { color: var(--amarillo-santander); }
 [data-rol="entrenador"] .rol-barra { background-color: var(--verde-santander); }

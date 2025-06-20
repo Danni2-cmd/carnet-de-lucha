@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const numDoc = document.getElementById('numDoc').value;
         const telEmergencia = document.getElementById('telEmergencia').value;
         const tipoSangre = document.getElementById('tipoSangre').value.toUpperCase();
-        const rol = document.getElementById('rol').value; // Sin .toUpperCase() para que coincida con el select
+        const rol = document.getElementById('rol').value;
         const fotoInput = document.getElementById('foto');
 
         if (fotoInput.files && fotoInput.files[0]) {
@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('carnet-sangre').innerText = tipoSangre;
         document.getElementById('carnet-tel').innerText = telEmergencia;
 
-        // --- ¡NUEVO! AÑADE EL ATRIBUTO PARA CAMBIAR EL COLOR ---
         carnetVirtual.dataset.rol = rol.toLowerCase();
 
         const verificationUrl = `https://danni2-cmd.github.io/carnet-de-lucha/index.html#verificar?id=${numDoc}`;
@@ -46,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const options = { scale: 4, useCORS: true, backgroundColor: '#ffffff' };
 
         html2canvas(carnetVirtual, options).then(canvas => {
-            // --- CORRECCIÓN: VUELTA A HORIZONTAL ---
             const cardWidthMM = 85.60;
             const cardHeightMM = 53.98;
             const pdf = new jspdf.jsPDF({

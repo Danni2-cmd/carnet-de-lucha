@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carnet Deportivo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+      text-align: center;
+    }
+    .carnet {
+      width: 350px;
+      margin: auto;
+      padding: 20px;
+      background: linear-gradient(180deg, #006400, #FFD700); /* verde a amarillo */
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      color: #000;
+      position: relative;
+    }
+    .logo-liga {
+      width: 60px;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+    .titulo-liga {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-top: 0;
+    }
+    .foto {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    canvas {
+      margin-top: 10px;
+    }
+    .btn-descarga {
+      margin-top: 15px;
+      padding: 8px 16px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="carnet" id="carnet">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Escudo_de_Santander_%28Colombia%29.svg/640px-Escudo_de_Santander_%28Colombia%29.svg.png" class="logo-liga" alt="Logo Liga" />
+    <h3 class="titulo-liga">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h3>
+    <img id="foto" class="foto" src="" alt="Foto del deportista" />
+    <h2 id="nombre"></h2>
+    <p id="documento"></p>
+    <p id="emergencia"></p>
+    <p id="sangre"></p>
+    <p id="rol"></p>
+    <p id="cargo" style="display:none;"></p>
+    <canvas id="qrCanvas"></canvas>
+    <button class="btn-descarga" onclick="descargarPDF()">Descargar Carnet</button>
+  </div>
+
+  <!-- QR y PDF Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/qrious"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    const data = JSON.parse(sessionStorage.getItem("carnetData"));
+
+    if (!data) {
+      document.body.innerHTML = "<p style='color:red;'>Error: No hay datos del carnet.</p>";
+    } else {
+      document.getElementById('nombre').textContent = 'Nombre: ' + data.nombre;
+      document.getElementById('documento').textContent = 'Documento: ' + data.tipoDocumento + ' ' + data.numeroDocumento;
+      document.getElementById('emergencia').textContent = 'Contacto de emergencia: ' + data.emergencia;
+      document.getElementById('sangre').textContent = 'Tipo de sangre: ' + data.sangre;
+      document.getElementById('rol').textContent = 'Rol: ' + data.rol;
+      document.getElementById('foto').src = data.foto;
+
+      if (data.rol === 'Administrativo') {
+        document.getElementById('cargo').style.display = 'block';
+        document.getElementById('cargo').textContent = 'Cargo: ' + data.cargo;
+      }
+
+      new QRious({
+        element: document.getElementById("qrCanvas"),
+        value: window.location.href,
+        size: 100
+      });
+    }
+
+    function descargarPDF() {
+      const carnet = document.getElementById("carnet");
+      html2pdf().from(carnet).set({
+        margin: 0,
+        filename: "carnet_" + data.nombre.replace(/\s+/g, "_") + ".pdf",
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).save();
+    }
+  </script>
+</body>
+</html>
