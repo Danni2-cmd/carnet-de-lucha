@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
     reader.onload = function (e) {
       const fotoBase64 = e.target.result;
 
-      // HTML del carnet con el borde negro y el ID del botón sin cambios
       const carnetHTML = `
         <div id="carnet-a-descargar" style="border: 2px solid #000000; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #fdfdfd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
           <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
@@ -39,8 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
             <div id="qr-code-container" style="width: 80px; height: 80px; align-self: flex-end;"></div>
           </div>
         </div>
-        <div style="text-align: center; margin-top: 20px;">
-          <button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Generar PDF</button>
+        <div id="imprimir-btn-container" style="text-align: center; margin-top: 20px;">
+          <button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Imprimir o Guardar como PDF</button>
         </div>
       `;
 
@@ -53,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
         window.print();
       });
     };
-
     reader.readAsDataURL(fotoURL);
   });
 });
