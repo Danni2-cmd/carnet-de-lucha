@@ -5,15 +5,21 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
+    // --- Lógica para capturar los datos condicionales ---
     let rolDisplay = document.getElementById("rol").value;
-    if (rolDisplay === "Otro") {
-      rolDisplay = document.getElementById("otroRol").value || "ROL NO ESPECIFICADO";
+    let rolValue = rolDisplay;
+
+    if (rolValue === "Otro") {
+      rolDisplay = document.getElementById("otroRol").value;
+      if (!rolDisplay) { alert("Por favor, especifica el otro rol."); return; }
     }
-    if (rolDisplay === "Entrenador") {
+    
+    if (rolValue === "Entrenador") {
         const tipoEntrenador = document.getElementById("tipoEntrenador").value;
         rolDisplay += ` (${tipoEntrenador})`;
         if (tipoEntrenador === 'Alto Rendimiento') {
-            rolDisplay += ` - ${document.getElementById("estiloLucha").value}`;
+            const estiloLucha = document.getElementById("estiloLucha").value;
+            rolDisplay += ` - ${estiloLucha}`;
         }
     }
     
@@ -22,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const numeroDocumento = document.getElementById("numeroDocumento").value;
     const contacto = document.getElementById("contacto").value;
     const sangre = document.getElementById("sangre").value.toUpperCase();
+    const cargo = document.getElementById("cargo").value;
     const fotoURL = document.getElementById("foto").files[0];
 
     if (!fotoURL) { alert("Por favor selecciona una foto."); return; }
@@ -30,37 +37,37 @@ document.addEventListener("DOMContentLoaded", function () {
     reader.onload = function (e) {
       const fotoBase64 = e.target.result;
 
-      // --- NUEVA ESTRUCTURA HTML DEL CARNET BASADA EN TU CSS ---
+      // --- HTML del carnet con fondo gradiente ---
       const carnetHTML = `
-        <div class="carnet-contenedor" id="carnet-a-descargar">
-            <div class="carnet-header">
-                <img src="logo.png" class="logo" alt="Logo">
-                <h2>LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
+        <div id="carnet-a-descargar" style="border: 2px solid #000000; background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(240,242,245,1) 100%); border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
+            <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
+            <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <img src="${fotoBase64}" alt="Foto" style="width: 110px; height: 140px; object-fit: cover; border-radius: 8px;">
+            <div style="font-size: 14px; flex-grow: 1;">
+              <strong style="font-size: 18px; font-weight: 900; display: block;">${nombre}</strong>
+              <span style="display: block; color: #555; margin-bottom: 8px;">${tipoDocumento} ${numeroDocumento}</span>
+              <strong>Rol:</strong> ${rolDisplay.toUpperCase()}${rolValue === "Administrativo" ? ` - ${cargo}` : ""}<br>
+              <strong>Contacto Emer:</strong> ${contacto}<br>
+              <strong>Sangre y RH:</strong> ${sangre}
             </div>
-            <div class="carnet-body">
-                <img src="${fotoBase64}" class="foto" alt="Foto">
-                <div class="contenido">
-                    <div class="texto">
-                        <p><strong>${nombre}</strong></p>
-                        <p>${tipoDocumento} ${numeroDocumento}</p>
-                        <p>Rol: ${rolDisplay}</p>
-                        <p>Sangre: ${sangre}</p>
-                        <p>Emergencia: ${contacto}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="qr" id="qr-code-container"></div>
+            <div id="qr-code-container" style="width: 80px; height: 80px; align-self: flex-end;"></div>
+          </div>
         </div>
-        <button onclick="window.print()" style="padding: 10px 20px; background-color: #c40000; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Descargar Carnet</button>
+        <div id="imprimir-btn-container" style="text-align: center; margin-top: 20px;">
+          <button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Imprimir o Guardar como PDF</button>
+        </div>
       `;
 
       carnetWrapper.innerHTML = carnetHTML;
 
       const qrCodeContainer = document.getElementById("qr-code-container");
-      new QRCode(qrCodeContainer, {
-        text: `${nombre} - ${numeroDocumento}`, // El QR ahora contiene datos básicos
-        width: 50,
-        height: 50,
+      new QRCode(qrCodeContainer, { text: window.location.href, width: 80, height: 80 });
+
+      document.getElementById("imprimir-btn").addEventListener("click", function () {
+        window.print();
       });
     };
 
