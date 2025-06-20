@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Datos del formulario (leyendo los nuevos campos)
     const nombre = document.getElementById("nombre").value;
     const tipoDocumento = document.getElementById("tipoDocumento").value;
     const numeroDocumento = document.getElementById("numeroDocumento").value;
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     reader.onload = function (e) {
       const fotoBase64 = e.target.result;
 
-      // Se crea el carnet con los datos combinados y un ID para el botón
+      // Se usa un div vacío para el QR que llenaremos con la librería local
       const carnetHTML = `
         <div id="carnet-a-descargar" style="border: 1px solid #ddd; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #fdfdfd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
           <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
@@ -40,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
               <strong>Contacto Emer:</strong> ${contacto}<br>
               <strong>Sangre y RH:</strong> ${sangre}
             </div>
-            <img id="qr-code" alt="QR Code" style="width: 80px; align-self: flex-end;">
+            <div id="qr-code-container" style="width: 80px; height: 80px; align-self: flex-end;"></div>
           </div>
         </div>
         <div style="text-align: center; margin-top: 20px;">
@@ -50,28 +49,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
       carnetContainer.innerHTML = carnetHTML;
 
-      // Generar QR (tu método con qrserver funciona perfecto)
-      const qrCodeImg = document.getElementById("qr-code");
-      const dataURL = window.location.href; // O una URL de verificación
-      qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(dataURL)}&size=100x100`;
+      // --- Generar QR con la librería local (más fiable) ---
+      const qrCodeContainer = document.getElementById("qr-code-container");
+      const verificationUrl = window.location.href; // O tu URL de verificación
+      new QRCode(qrCodeContainer, {
+        text: verificationUrl,
+        width: 80,
+        height: 80,
+      });
 
-      // --- CORRECCIÓN DEFINITIVA PARA EL BOTÓN PDF ---
-      // Se añade el 'listener' justo después de crear el botón
-      const botonDescarga = document.getElementById("descargar-btn");
-      botonDescarga.addEventListener("click", function () {
-        const carnetParaDescargar = document.getElementById("carnet-a-descargar");
-        const opt = {
-          margin: 0,
-          filename: `carnet_${numeroDocumento}.pdf`,
-          image: { type: 'jpeg', quality: 1.0 },
-          html2canvas: { scale: 4 }, // Alta resolución
-          jsPDF: { 
-            unit: 'mm', 
-            format: [85.6, 53.98], // Tamaño exacto de tarjeta
-            orientation: 'landscape' 
-          }
-        };
-        html2pdf().from(carnetParaDescargar).set(opt).save();
+      // --- Lógica de descarga Anti-PDF en Blanco ---
+      document.getElementById("descargar-btn").addEventListener("click", function () {
+        const carnetElement = document.getElementById("carnet-a-descargar");
+        
+        // --- CÓDIGO CLAVE: ESPERAR A QUE LAS IMÁGENES CARGUEN ---
+        const images = carnetElement.getElementsByTagName('img');
+        const promises = [];
+        for (let i = 0; i < images.length; i++) {
+            if (images[i].complete) { // Si la imagen ya está cargada, no hacemos nada
+                continue;
+            }
+            // Si no, creamos una promesa que se resolverá cuando la imagen cargue
+            promises.push(new Promise(resolve => {
+                images[i].onload = resolve;
+                images[i].onerror = resolve; // Resolvemos también en error para no bloquear el proceso
+            }));
+        }
+
+        // Promise.all espera a que todas las promesas de imágenes se cumplan
+        Promise.all(promises).then(() => {
+            console.log("Todas las imágenes están cargadas. Generando PDF...");
+            
+            const opt = {
+                margin: 0,
+                filename: `carnet_${numeroDocumento}.pdf`,
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: { scale: 4, useCORS: true }, // useCORS es buena práctica
+                jsPDF: { unit: 'mm', format: [85.6, 53.98], orientation: 'landscape' }
+            };
+            
+            // Ahora sí, generamos el PDF con la seguridad de que todo está visible
+            html2pdf().from(carnetElement).set(opt).save();
+        });
       });
     };
 
