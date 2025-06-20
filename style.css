@@ -27,7 +27,7 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); 
 .btn-primary { background-color: var(--rojo-santander); color: var(--blanco); margin-top: 20px; }
 .btn-secondary { background-color: var(--verde-santander); color: var(--blanco); margin-top: 20px; max-width: 300px; }
 
-/* --- NUEVO DISEÑO DE CARNET HORIZONTAL (v3 - Basado en Ejemplo) --- */
+/* --- NUEVO DISEÑO DE CARNET HORIZONTAL (v4 - AJUSTES FINALES) --- */
 #carnet-virtual {
     width: 85.6mm;
     height: 53.98mm;
@@ -44,31 +44,103 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); 
 .carnet-header {
     display: flex;
     align-items: center;
-    padding: 2mm;
+    padding: 2.5mm; /* AJUSTE: Menos padding vertical */
     background-color: #f5f5f5;
     border-bottom: 1px solid #ddd;
+    height: 9mm; /* AJUSTE: Altura fija */
+    box-sizing: border-box;
 }
-.carnet-header img { height: 6mm; width: 6mm; margin-right: 3mm; }
-.carnet-header span { font-size: 2.2mm; font-weight: 700; color: var(--negro-principal); }
+.carnet-header img {
+    height: 5mm; /* AJUSTE: Tamaño del logo */
+    width: 5mm;
+    margin-right: 2mm;
+}
+.carnet-header span {
+    font-size: 2mm; /* AJUSTE: Tamaño de fuente del header */
+    font-weight: 700;
+    color: var(--negro-principal);
+}
 
-.carnet-body { display: flex; padding: 3mm; gap: 3mm; flex-grow: 1; }
-.foto-container { width: 22mm; height: 100%; flex-shrink: 0; }
-#carnet-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 2mm; }
+.carnet-body {
+    display: flex;
+    padding: 3mm;
+    gap: 3.5mm; /* AJUSTE: Espacio entre foto e info */
+    flex-grow: 1;
+    align-items: flex-start; /* AJUSTE: Alinea los items arriba */
+}
+.foto-container {
+    width: 24mm;  /* AJUSTE: Ancho de la foto */
+    height: 31mm; /* AJUSTE: Altura de la foto */
+    flex-shrink: 0;
+}
+#carnet-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2mm;
+}
 
-.info-container { display: flex; flex-direction: column; flex-grow: 1; }
-.info-nombre p { font-size: 4.5mm; font-weight: 900; margin: 0; line-height: 1; }
-.info-nombre span { font-size: 2.5mm; color: #666; }
-.rol-barra { padding: 1.5mm 3mm; margin: 2mm 0; border-radius: 1.5mm; text-align: center; }
-.rol-barra span { font-size: 2.8mm; font-weight: 700; color: var(--blanco); text-transform: uppercase; }
-.info-detalles { display: flex; margin-top: auto; align-items: flex-end; }
-.detalles-contacto { font-size: 2.2mm; line-height: 1.4; flex-grow: 1; }
-.detalles-contacto label { font-weight: 700; color: #333; }
-.detalles-contacto span { margin-left: 2mm; color: #555; }
-#carnet-sangre::before { content: " / "; }
-.qr-code { width: 15mm; height: 15mm; flex-shrink: 0; }
+.info-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%; /* Ocupa toda la altura disponible en el body */
+}
+.info-nombre p {
+    font-size: 4mm; /* AJUSTE: Tamaño de fuente del nombre */
+    font-weight: 900;
+    margin: 0 0 1mm 0; /* AJUSTE: Margen inferior */
+    line-height: 1;
+    word-break: break-word; /* Evita que nombres largos rompan el layout */
+}
+.info-nombre span {
+    font-size: 2.2mm; /* AJUSTE: Tamaño de fuente del documento */
+    color: #666;
+}
+.rol-barra {
+    padding: 1.2mm 3mm; /* AJUSTE: Padding de la barra */
+    margin: 2.5mm 0; /* AJUSTE: Margen vertical */
+    border-radius: 1.5mm;
+    text-align: center;
+}
+.rol-barra span {
+    font-size: 2.5mm; /* AJUSTE: Tamaño de fuente del rol */
+    font-weight: 700;
+    color: var(--blanco);
+    text-transform: uppercase;
+}
+.info-detalles {
+    display: flex;
+    margin-top: auto; /* EMPUJA ESTE BLOQUE HACIA ABAJO */
+    align-items: flex-end;
+    width: 100%;
+}
+.detalles-contacto {
+    font-size: 2mm; /* AJUSTE: Tamaño de fuente de detalles */
+    line-height: 1.3;
+    flex-grow: 1;
+}
+.detalles-contacto label {
+    font-weight: 700;
+    color: #333;
+    display: block; /* Para que el span se ponga abajo */
+}
+.detalles-contacto span {
+    margin: 0;
+    color: #555;
+    font-weight: 500;
+}
+#carnet-sangre { font-size: 2.5mm; font-weight: 700; margin-top: 1mm; display: block; }
+#carnet-sangre::before { content: ""; } /* Quita la barra de la sangre */
+
+.qr-code {
+    width: 16mm;  /* AJUSTE: Tamaño del QR */
+    height: 16mm;
+    flex-shrink: 0;
+}
 .qr-code img { width: 100% !important; height: 100% !important; display: block; }
 
-/* COLORES DINÁMICOS BASADOS EN EL ROL (Se aplica con JavaScript) */
+/* COLORES DINÁMICOS BASADOS EN EL ROL (SIN CAMBIOS) */
 [data-rol="deportista"] .rol-barra { background-color: var(--amarillo-santander); }
 [data-rol="deportista"] .info-nombre p { color: var(--amarillo-santander); }
 [data-rol="entrenador"] .rol-barra { background-color: var(--verde-santander); }
