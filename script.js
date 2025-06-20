@@ -1,59 +1,78 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('registroForm');
-    const carnetContainer = document.getElementById('carnet-container');
-    const carnetVirtual = document.getElementById('carnet-virtual');
-    const qrCodeContainer = document.getElementById('carnet-qr');
-    let qrCodeInstance = null;
+// Espera a que cargue todo el DOM
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("carnet-form");
+  const carnetContainer = document.getElementById("carnet-container");
 
-    form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const nombres = document.getElementById('nombres').value.toUpperCase();
-        const tipoDoc = document.getElementById('tipoDoc').value;
-        const numDoc = document.getElementById('numDoc').value;
-        const telEmergencia = document.getElementById('telEmergencia').value;
-        const tipoSangre = document.getElementById('tipoSangre').value.toUpperCase();
-        const rol = document.getElementById('rol').value;
-        const fotoInput = document.getElementById('foto');
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-        if (fotoInput.files && fotoInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) { document.getElementById('carnet-foto').src = e.target.result; };
-            reader.readAsDataURL(fotoInput.files[0]);
-        }
+    // Datos del formulario
+    const nombre = document.getElementById("nombre").value;
+    const documento = document.getElementById("documento").value;
+    const contacto = document.getElementById("contacto").value;
+    const sangre = document.getElementById("sangre").value;
+    const rol = document.getElementById("rol").value;
+    const cargo = document.getElementById("cargo").value;
+    const fotoURL = document.getElementById("foto").files[0];
 
-        document.getElementById('carnet-nombres').innerText = nombres;
-        document.getElementById('carnet-rol').innerText = rol.toUpperCase();
-        document.getElementById('carnet-doc').innerText = `${tipoDoc} ${numDoc}`;
-        document.getElementById('carnet-sangre').innerText = tipoSangre;
-        document.getElementById('carnet-tel').innerText = telEmergencia;
+    if (!fotoURL) {
+      alert("Por favor selecciona una foto.");
+      return;
+    }
 
-        carnetVirtual.dataset.rol = rol.toLowerCase();
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const fotoBase64 = e.target.result;
 
-        const verificationUrl = `https://danni2-cmd.github.io/carnet-de-lucha/index.html#verificar?id=${numDoc}`;
-        if (qrCodeInstance) { qrCodeContainer.innerHTML = ''; }
-        qrCodeInstance = new QRCode(qrCodeContainer, {
-            text: verificationUrl, width: 128, height: 128,
-            colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H
-        });
-        
-        carnetContainer.style.display = 'flex';
-    });
+      // Creamos el carnet con HTML
+      const carnetHTML = `
+        <div id="carnet" style="border: 2px solid #004d00; border-radius: 12px; padding: 16px; max-width: 400px; font-family: Arial, sans-serif; background-color: #fdfdfd;">
+          <div style="text-align: center;">
+            <img src="logo.png" alt="Logo Liga" style="max-width: 120px; margin-bottom: 8px;">
+            <h2 style="color: #007700; margin: 4px 0;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
+            <h3 style="color: #004d00;">Carnet Digital</h3>
+          </div>
+          <div style="display: flex; align-items: center; margin-top: 10px;">
+            <img src="${fotoBase64}" alt="Foto" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; margin-right: 16px; border: 1px solid #ccc;">
+            <div style="font-size: 14px;">
+              <strong>${nombre}</strong><br>
+              CC: ${documento}<br>
+              Contacto: ${contacto}<br>
+              Sangre: ${sangre}<br>
+              Rol: ${rol}${rol === "Administrativo" ? ` - ${cargo}` : ""}
+            </div>
+          </div>
+          <div style="text-align: right; margin-top: 10px;">
+            <img id="qr-code" alt="QR Code" style="width: 80px;">
+          </div>
+          <div style="text-align: center; margin-top: 15px;">
+            <button onclick="descargarPDF()" style="padding: 8px 16px; background-color: #007700; color: white; border: none; border-radius: 4px;">Descargar carnet en PDF</button>
+          </div>
+        </div>
+      `;
 
-    document.getElementById('descargar-pdf').addEventListener('click', () => {
-        const numDoc = document.getElementById('numDoc').value;
-        const fileName = `Carnet_Lucha_${numDoc}.pdf`;
-        const options = { scale: 4, useCORS: true, backgroundColor: '#ffffff' };
+      carnetContainer.innerHTML = carnetHTML;
 
-        html2canvas(carnetVirtual, options).then(canvas => {
-            const cardWidthMM = 85.60;
-            const cardHeightMM = 53.98;
-            const pdf = new jspdf.jsPDF({
-                orientation: 'landscape',
-                unit: 'mm',
-                format: [cardWidthMM, cardHeightMM]
-            });
-            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, cardWidthMM, cardHeightMM);
-            pdf.save(fileName);
-        });
-    });
+      // Generar QR del carnet
+      const qrCodeImg = document.getElementById("qr-code");
+      const dataURL = window.location.href;
+      qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(dataURL)}&size=100x100`;
+
+    };
+
+    reader.readAsDataURL(fotoURL);
+  });
 });
+
+// Descarga PDF usando html2pdf
+function descargarPDF() {
+  const carnet = document.getElementById("carnet");
+  const opt = {
+    margin: 0.2,
+    filename: 'carnet_digital.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+  };
+  html2pdf().from(carnet).set(opt).save();
+}

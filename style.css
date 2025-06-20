@@ -1,77 +1,65 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
-  padding: 20px;
+  padding: 30px;
 }
 
-.container {
-  background: white;
-  padding: 20px;
-  max-width: 500px;
+.card {
+  width: 600px;
   margin: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-input, select, button {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+.header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width: 80px;
+}
+
+.header h1 {
+  font-size: 20px;
+  color: #003300;
+}
+
+.body {
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.foto {
+  width: 120px;
+  height: 150px;
+  object-fit: cover;
+  border: 3px solid #007a33; /* Verde */
+  border-radius: 8px;
+}
+
+.info {
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+.qr {
+  width: 100px;
+  height: 100px;
 }
 
 button {
-  background-color: #007700;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #c40000; /* Rojo */
   color: white;
-  font-weight: bold;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-}
-
-#carnet {
-  width: 350px;
-  height: 200px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 2px solid #004d00;
-  border-radius: 12px;
-  padding: 12px;
-  font-family: Arial, sans-serif;
-  background-color: #ffffff;
-  position: relative;
-}
-
-#carnet img.foto {
-  width: 90px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #999;
-}
-
-#carnet .info {
-  flex: 1;
-  padding-left: 12px;
-  font-size: 12px;
-}
-
-#carnet .logo {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 60px;
-}
-
-#carnet h2 {
-  font-size: 14px;
-  margin: 4px 0;
-  color: #004d00;
-}
-
-#carnet .qr {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  width: 60px;
+  font-weight: bold;
 }
