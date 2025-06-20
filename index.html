@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Carnet - Liga Santandereana de Lucha Olímpica</title>
+  <title>Carnetización con Firebase - Liga de Lucha</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,65 +13,27 @@
     <div class="main-content">
         <header class="main-header">
             <img src="logo.png" alt="Logo de la Liga" class="header-logo">
-            <h1>Generador de Carnet</h1>
+            <h1>Portal de Carnetización Automatizado</h1>
             <h2>Liga Santandereana de Lucha Olímpica</h2>
         </header>
-
         <div class="container">
             <form id="carnet-form">
-                <label>Nombre completo:</label>
-                <input type="text" id="nombre" required>
-
-                <label>Tipo de documento:</label>
-                <select id="tipoDocumento" required>
-                    <option value="C.C.">Cédula de Ciudadanía</option>
-                    <option value="T.I.">Tarjeta de Identidad</option>
-                    <option value="C.E.">Cédula de Extranjería</option>
-                    <option value="PA.">Pasaporte</option>
-                </select>
-                
-                <label>Número de documento:</label>
-                <input type="text" id="numeroDocumento" required>
-                
-                <label>Contacto de emergencia:</label>
-                <input type="tel" id="contacto" required>
-
-                <label>Tipo de sangre:</label>
-                <input type="text" id="sangre" placeholder="Ej: O+" required>
-
-                <label>Rol:</label>
-                <select id="rol" required onchange="mostrarCargo(this.value)">
-                    <option value="">Selecciona...</option>
-                    <option value="Deportista">Deportista</option>
-                    <option value="Entrenador">Entrenador</option>
-                    <option value="Juez">Juez</option>
-                    <option value="Administrativo">Administrativo</option>
-                </select>
-
-                <div id="cargo-container" style="display: none;">
-                    <label>Cargo (si es administrativo):</label>
-                    <input type="text" id="cargo">
-                </div>
-
-                <label>Foto:</label>
-                <input type="file" id="foto" accept="image/*" required>
-
-                <button type="submit">Generar carnet</button>
+                <label>Nombre completo:</label><input type="text" id="nombre" required>
+                <label>Tipo de documento:</label><select id="tipoDocumento" required><option value="C.C.">Cédula de Ciudadanía</option><option value="T.I.">Tarjeta de Identidad</option><option value="C.E.">Cédula de Extranjería</option><option value="PA.">Pasaporte</option></select>
+                <label>Número de documento:</label><input type="text" id="numeroDocumento" required>
+                <label>Contacto de emergencia:</label><input type="tel" id="contacto" required>
+                <label>Tipo de sangre:</label><input type="text" id="sangre" placeholder="Ej: O+" required>
+                <label>Rol:</label><select id="rol" required><option value="">Selecciona...</option><option value="Deportista">Deportista</option><option value="Entrenador">Entrenador</option><option value="Juez">Juez</option><option value="Administrativo">Administrativo</option></select>
+                <label>Foto:</label><input type="file" id="foto" accept="image/*" required>
+                <button type="submit" id="submit-btn">Registrar y Generar Carnet</button>
             </form>
         </div>
     </div>
-
     <div id="carnet-wrapper"></div>
+    <div id="status-message" style="text-align:center; margin-top: 20px; font-weight: bold;"></div>
 
     <script src="qrcode.min.js"></script>
-    <script src="script.js"></script>
-
-    <script>
-        function mostrarCargo(valor) {
-            const cargoDiv = document.getElementById("cargo-container");
-            cargoDiv.style.display = valor === "Administrativo" ? "block" : "none";
-        }
-    </script>
+    <script src="script.js" type="module"></script>
 
 </body>
 </html>
