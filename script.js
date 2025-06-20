@@ -1,19 +1,18 @@
-// --- IMPORTAR LAS FUNCIONES NECESARIAS DE FIREBASE (Sintaxis Moderna) ---
+// --- IMPORTAR LAS FUNCIONES NECESARIAS DE FIREBASE ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
-// --- CONFIGURACIÓN DE FIREBASE (TUS LLAVES PERSONALES) ---
+// --- CONFIGURACIÓN DE FIREBASE ---
 const firebaseConfig = {
     apiKey: "AIzaSyBE9FZI5W4o9856L24m6HrQrA7BdEvjE64",
     authDomain: "liga-lucha-santander.firebaseapp.com",
     projectId: "liga-lucha-santander",
-    storageBucket: "liga-lucha-santander.firebasestorage.app", // La dirección original y correcta
+    storageBucket: "liga-lucha-santander.appspot.com",
     messagingSenderId: "402094242632",
     appId: "1:402094242632:web:07f67830a46b5eaa2a917d"
 };
 
-// --- INICIALIZACIÓN DE FIREBASE ---
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
@@ -23,12 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const verificationId = urlParams.get('id');
 
+    const mainContent = document.querySelector('.main-content');
+    const carnetWrapper = document.getElementById("carnet-wrapper");
+
     if (verificationId) {
-        // MODO VERIFICACIÓN: Si hay un 'id' en la URL, muestra solo el carnet.
-        document.querySelector('.main-content').style.display = 'none';
+        if (mainContent) mainContent.style.display = 'none';
         handleVerification(verificationId);
     } else {
-        // MODO NORMAL: Muestra el formulario de registro.
         setupForm();
     }
 });
@@ -39,42 +39,15 @@ async function handleVerification(id) {
     try {
         const docRef = doc(db, "afiliados", id);
         const docSnap = await getDoc(docRef);
-
         if (docSnap.exists()) {
-            displayVerifiedCarnet(docSnap.data());
+            displayCarnet(docSnap.data(), false); // false = no mostrar botón de descarga
         } else {
-            carnetWrapper.innerHTML = '<h1 style="text-align:center; color: #d42e12; padding-top: 50px;">Error: Afiliado no encontrado en la base de datos.</h1>';
+            carnetWrapper.innerHTML = '<h1>Error: Afiliado no encontrado.</h1>';
         }
     } catch (error) {
-        console.error("Error obteniendo el documento:", error);
-        carnetWrapper.innerHTML = '<h1 style="text-align:center; color: #d42e12; padding-top: 50px;">Error al verificar el carnet.</h1>';
+        console.error("Error:", error);
+        carnetWrapper.innerHTML = '<h1>Error al verificar el carnet.</h1>';
     }
-}
-
-function displayVerifiedCarnet(data) {
-    const carnetWrapper = document.getElementById("carnet-wrapper");
-    const carnetHTML = `
-      <div style="margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-        <div id="carnet-verificado" style="border: 2px solid #000000; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin: auto;">
-            <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
-                <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
-                <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
-            </div>
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <img src="${data.fotoUrl}" alt="Foto" style="width: 110px; height: 140px; object-fit: cover; border-radius: 8px;">
-                <div style="font-size: 14px; flex-grow: 1;">
-                    <strong style="font-size: 18px; font-weight: 900; display: block;">${data.nombre}</strong>
-                    <span style="display: block; color: #555; margin-bottom: 8px;">${data.tipoDocumento} ${data.numeroDocumento}</span>
-                    <strong>Rol:</strong> ${data.rol}<br>
-                    <strong>Contacto Emer:</strong> ${data.contacto}<br>
-                    <strong>Sangre y RH:</strong> ${data.sangre}
-                </div>
-            </div>
-        </div>
-        <h3 style="text-align:center; color: #00843D;">✓ Carnet Válido y Verificado</h3>
-      </div>
-    `;
-    carnetWrapper.innerHTML = carnetHTML;
 }
 
 // --- FUNCIÓN PARA EL MODO FORMULARIO ---
@@ -90,7 +63,7 @@ function setupForm() {
         submitBtn.disabled = true;
         statusMessage.textContent = "Registrando, por favor espera...";
         statusMessage.style.color = "#333";
-
+        
         const numeroDocumento = document.getElementById("numeroDocumento").value;
         const fotoFile = document.getElementById("foto").files[0];
 
@@ -106,16 +79,16 @@ function setupForm() {
             const fotoPath = `fotos/${numeroDocumento}_${Date.now()}`;
             const storageRef = ref(storage, fotoPath);
             await uploadBytes(storageRef, fotoFile);
-            
             const downloadURL = await getDownloadURL(storageRef);
 
+            // Objeto de datos simplificado, sin los campos condicionales
             const afiliadoData = {
                 nombre: document.getElementById("nombre").value.toUpperCase(),
                 tipoDocumento: document.getElementById("tipoDocumento").value,
                 numeroDocumento: numeroDocumento,
                 contacto: document.getElementById("contacto").value,
                 sangre: document.getElementById("sangre").value.toUpperCase(),
-                rol: document.getElementById("rol").value,
+                rol: document.getElementById("rol").value, // Se toma el valor simple del rol
                 fotoUrl: downloadURL,
                 fechaRegistro: new Date().toISOString()
             };
@@ -123,16 +96,15 @@ function setupForm() {
             statusMessage.textContent = "Guardando información...";
             await setDoc(doc(db, "afiliados", numeroDocumento), afiliadoData);
             
-            statusMessage.textContent = "¡Registro exitoso! Generando vista previa...";
+            statusMessage.textContent = "¡Registro exitoso!";
             statusMessage.style.color = "green";
             form.reset();
             
-            // Genera la vista previa del carnet recién creado
-            generateCarnetPreview(afiliadoData);
+            displayCarnet(afiliadoData, true); // true = mostrar botón de descarga
 
         } catch (error) {
-            console.error("Error en el proceso de registro: ", error);
-            statusMessage.textContent = `Error: No se pudo registrar. Revisa la consola (F12).`;
+            console.error("Error:", error);
+            statusMessage.textContent = `Error al registrar. Revisa la consola (F12).`;
             statusMessage.style.color = "red";
         } finally {
             submitBtn.disabled = false;
@@ -140,39 +112,42 @@ function setupForm() {
     });
 }
 
-function generateCarnetPreview(data) {
+// --- FUNCIÓN UNIFICADA PARA MOSTRAR CUALQUIER CARNET ---
+function displayCarnet(data, showDownloadButton) {
     const carnetWrapper = document.getElementById("carnet-wrapper");
+    // Se usa la estructura HTML que se ve bien, pero con la data simplificada
     const carnetHTML = `
-        <h3>Vista Previa del Carnet</h3>
-        <div id="carnet-a-descargar" style="border: 2px solid #000000; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #fdfdfd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-            <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
-                <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
-                <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
+        <div id="carnet-a-descargar" style="border: 2px solid #000000; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #f8f9fa; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+          <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
+            <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
+            <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <img src="${data.fotoUrl}" alt="Foto" style="width: 110px; height: 140px; object-fit: cover; border-radius: 8px;">
+            <div style="font-size: 14px; flex-grow: 1;">
+              <strong style="font-size: 18px; font-weight: 900; display: block;">${data.nombre}</strong>
+              <span style="display: block; color: #555; margin-bottom: 8px;">${data.tipoDocumento} ${data.numeroDocumento}</span>
+              <strong>Rol:</strong> ${data.rol}<br>
+              <strong>Contacto Emer:</strong> ${data.contacto}<br>
+              <strong>Sangre y RH:</strong> ${data.sangre}
             </div>
-            <div style="display: flex; align-items: center; gap: 16px;">
-                <img src="${data.fotoUrl}" alt="Foto" style="width: 110px; height: 140px; object-fit: cover; border-radius: 8px;">
-                <div style="font-size: 14px; flex-grow: 1;">
-                    <strong style="font-size: 18px; font-weight: 900; display: block;">${data.nombre}</strong>
-                    <span style="display: block; color: #555; margin-bottom: 8px;">${data.tipoDocumento} ${data.numeroDocumento}</span>
-                    <strong>Rol:</strong> ${data.rol}<br>
-                    <strong>Contacto Emer:</strong> ${data.contacto}<br>
-                    <strong>Sangre y RH:</strong> ${data.sangre}
-                </div>
-                <div id="qr-code-container" style="width: 80px; height: 80px; align-self: flex-end;"></div>
-            </div>
+            <div id="qr-code-container" style="width: 80px; height: 80px; align-self: flex-end;"></div>
+          </div>
         </div>
-        <div id="imprimir-btn-container" style="text-align: center; margin-top: 20px;">
-            <button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Imprimir o Guardar como PDF</button>
-        </div>
+        ${showDownloadButton ? `<div id="imprimir-btn-container" style="text-align: center; margin-top: 20px;"><button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Imprimir o Guardar como PDF</button></div>` : ''}
+        ${!showDownloadButton ? `<h3 style="text-align:center; color: #026937;">✓ Carnet Válido y Verificado</h3>` : ''}
     `;
 
     carnetWrapper.innerHTML = carnetHTML;
+    
+    // Solo intentar generar QR y botón si estamos en modo de vista previa
+    if (showDownloadButton) {
+        const qrCodeContainer = document.getElementById("qr-code-container");
+        const verificationUrl = `${window.location.origin}${window.location.pathname}?id=${data.numeroDocumento}`;
+        new QRCode(qrCodeContainer, { text: verificationUrl, width: 80, height: 80 });
 
-    const qrCodeContainer = document.getElementById("qr-code-container");
-    const verificationUrl = `${window.location.origin}${window.location.pathname}?id=${data.numeroDocumento}`;
-    new QRCode(qrCodeContainer, { text: verificationUrl, width: 80, height: 80 });
-
-    document.getElementById("imprimir-btn").addEventListener("click", function () {
-        window.print();
-    });
+        document.getElementById("imprimir-btn").addEventListener("click", function () {
+            window.print();
+        });
+    }
 }
