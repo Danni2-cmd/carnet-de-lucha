@@ -10,63 +10,68 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="main-content">
+        <header class="main-header">
+            <img src="logo.png" alt="Logo de la Liga" class="header-logo">
+            <h1>Generador de Carnet</h1>
+            <h2>Liga Santandereana de Lucha Olímpica</h2>
+        </header>
 
-  <div class="container">
-    <h1>Generador de Carnet</h1>
-    <form id="carnet-form">
-      <label>Nombre completo:</label>
-      <input type="text" id="nombre" required>
+        <div class="container">
+            <form id="carnet-form">
+                <label>Nombre completo:</label>
+                <input type="text" id="nombre" required>
 
-      <label>Tipo de documento:</label>
-      <select id="tipoDocumento" required>
-        <option value="C.C.">Cédula de Ciudadanía</option>
-        <option value="T.I.">Tarjeta de Identidad</option>
-        <option value="C.E.">Cédula de Extranjería</option>
-        <option value="PA.">Pasaporte</option>
-      </select>
-      
-      <label>Número de documento:</label>
-      <input type="text" id="numeroDocumento" required>
-      
-      <label>Contacto de emergencia:</label>
-      <input type="tel" id="contacto" required>
+                <label>Tipo de documento:</label>
+                <select id="tipoDocumento" required>
+                    <option value="C.C.">Cédula de Ciudadanía</option>
+                    <option value="T.I.">Tarjeta de Identidad</option>
+                    <option value="C.E.">Cédula de Extranjería</option>
+                    <option value="PA.">Pasaporte</option>
+                </select>
+                
+                <label>Número de documento:</label>
+                <input type="text" id="numeroDocumento" required>
+                
+                <label>Contacto de emergencia:</label>
+                <input type="tel" id="contacto" required>
 
-      <label>Tipo de sangre:</label>
-      <input type="text" id="sangre" placeholder="Ej: O+" required>
+                <label>Tipo de sangre:</label>
+                <input type="text" id="sangre" placeholder="Ej: O+" required>
 
-      <label>Rol:</label>
-      <select id="rol" required onchange="mostrarCargo(this.value)">
-        <option value="">Selecciona...</option>
-        <option value="Deportista">Deportista</option>
-        <option value="Entrenador">Entrenador</option>
-        <option value="Juez">Juez</option>
-        <option value="Administrativo">Administrativo</option>
-      </select>
+                <label>Rol:</label>
+                <select id="rol" required onchange="mostrarCargo(this.value)">
+                    <option value="">Selecciona...</option>
+                    <option value="Deportista">Deportista</option>
+                    <option value="Entrenador">Entrenador</option>
+                    <option value="Juez">Juez</option>
+                    <option value="Administrativo">Administrativo</option>
+                </select>
 
-      <div id="cargo-container" style="display: none;">
-        <label>Cargo (si es administrativo):</label>
-        <input type="text" id="cargo">
-      </div>
+                <div id="cargo-container" style="display: none;">
+                    <label>Cargo (si es administrativo):</label>
+                    <input type="text" id="cargo">
+                </div>
 
-      <label>Foto:</label>
-      <input type="file" id="foto" accept="image/*" required>
+                <label>Foto:</label>
+                <input type="file" id="foto" accept="image/*" required>
 
-      <button type="submit">Generar carnet</button>
-    </form>
+                <button type="submit">Generar carnet</button>
+            </form>
+        </div>
+    </div>
 
-    <div id="carnet-container" style="margin-top: 40px;"></div>
-  </div>
+    <div id="carnet-wrapper"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script src="qrcode.min.js"></script>
-  <script src="script.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script src="script.js"></script>
 
-  <script>
-    function mostrarCargo(valor) {
-      const cargoDiv = document.getElementById("cargo-container");
-      cargoDiv.style.display = valor === "Administrativo" ? "block" : "none";
-    }
-  </script>
+    <script>
+        function mostrarCargo(valor) {
+            const cargoDiv = document.getElementById("cargo-container");
+            cargoDiv.style.display = valor === "Administrativo" ? "block" : "none";
+        }
+    </script>
 
 </body>
 </html>
