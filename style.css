@@ -1,0 +1,45 @@
+body {
+    font-family Arial, sans-serif;
+    background-color #f0f2f5;
+    color #333;
+    display flex;
+    justify-content center;
+    padding 20px;
+}
+.container {
+    background-color #fff;
+    padding 30px;
+    border-radius 8px;
+    box-shadow 0 4px 8px rgba(0,0,0,0.1);
+    width 100%;
+    max-width 900px;
+}
+h1, h2 { color #003366; text-align center; }
+#registroForm { display flex; flex-direction column; }
+.form-grid { display grid; grid-template-columns repeat(2, 1fr); gap 20px; margin-bottom 20px; }
+.form-group { display flex; flex-direction column; }
+.form-group.full-width { grid-column 1  -1; }
+label { margin-bottom 5px; font-weight bold; font-size 14px; }
+input[type=text], input[type=tel], input[type=file], select { padding 10px; border 1px solid #ccc; border-radius 4px; font-size 16px; }
+button { background-color #d9534f; color white; padding 12px 20px; border none; border-radius 4px; cursor pointer; font-size 16px; font-weight bold; align-self center; margin-top 10px; }
+buttonhover { background-color #c9302c; }
+.carnet-container { margin-top 30px; display flex; flex-direction column; align-items center; }
+#carnet-virtual { width 85.6mm; height 53.98mm; box-sizing border-box; background-color #ffffff; border 1px solid #ccc; font-family 'Helvetica', sans-serif; display flex; flex-direction column; overflow hidden; }
+.carnet-header { display flex; align-items center; padding 4mm; background-color #003366; color white; }
+.carnet-header #logo-img { width 12mm; height 12mm; margin-right 4mm; }
+.carnet-header .header-text h3 { margin 0; font-size 4mm; font-weight bold; }
+.carnet-header .header-text p { margin 0; font-size 3mm; }
+.carnet-body { display flex; padding 4mm; flex-grow 1; }
+.foto-container { width 25mm; height 32mm; border 1.5px solid #003366; margin-right 4mm; }
+#carnet-foto { width 100%; height 100%; object-fit cover; }
+.datos-container { flex-grow 1; }
+.datos-container #carnet-nombres { font-weight bold; font-size 3.5mm; margin 0 0 1mm 0; color #003366; }
+.datos-container #carnet-rol { font-size 3mm; font-weight bold; color #d9534f; margin 0 0 2mm 0; }
+.datos-container hr { border 0; height 0.5px; background-color #ccc; margin 2mm 0; }
+.datos-container .carnet-label { font-size 2.2mm; font-weight bold; color #555; margin 1.5mm 0 0 0; }
+.datos-container p { font-size 2.8mm; margin 0; }
+.qr-container { width 18mm; height 18mm; display flex; align-items center; justify-content center; }
+#carnet-qr { width 100%; height 100%; }
+#carnet-qr img { width 100% !important; height 100% !important; }
+.carnet-footer { background-color #f0f0f0; text-align center; padding 1mm; }
+.carnet-footer p { margin 0; font-size 2.2mm; color #555; }

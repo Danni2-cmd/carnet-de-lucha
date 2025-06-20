@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carnet Virtual - Liga Santandereana de Lucha Olímpica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sistema de Carnetización</h1>
+        <p>Liga Santandereana de Lucha Olímpica</p>
+
+        <form id="registroForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nombres">Nombres y Apellidos Completos</label>
+                    <input type="text" id="nombres" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipoDoc">Tipo de Documento</label>
+                    <select id="tipoDoc">
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="PA">Pasaporte</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numDoc">Número de Documento</label>
+                    <input type="text" id="numDoc" required>
+                </div>
+                <div class="form-group">
+                    <label for="telEmergencia">Teléfono de Emergencia</label>
+                    <input type="tel" id="telEmergencia" required>
+                </div>
+                <div class="form-group">
+                    <label for="tipoSangre">Tipo de Sangre y RH</label>
+                    <input type="text" id="tipoSangre" placeholder="Ej: O+" required>
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol en la Liga</label>
+                    <select id="rol">
+                        <option value="Deportista">Deportista</option>
+                        <option value="Entrenador">Entrenador</option>
+                        <option value="Juez">Juez</option>
+                        <option value="Administrativo">Administrativo</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="foto">Foto tipo Documento (Fondo Blanco)</label>
+                    <input type="file" id="foto" accept="image/*" required>
+                </div>
+            </div>
+            <button type="submit">Generar Carnet Virtual</button>
+        </form>
+
+        <div id="carnet-container" class="carnet-container" style="display: none;">
+            <h2>Carnet Generado</h2>
+            
+            <div id="carnet-virtual">
+                <div class="carnet-header">
+                    <img src="logo.png" alt="Logo Liga" id="logo-img">
+                    <div class="header-text">
+                        <h3>Liga Santandereana</h3>
+                        <p>de Lucha Olímpica</p>
+                    </div>
+                </div>
+                <div class="carnet-body">
+                    <div class="foto-container">
+                        <img id="carnet-foto" src="" alt="Foto Deportista">
+                    </div>
+                    <div class="datos-container">
+                        <p id="carnet-nombres">NOMBRES COMPLETOS</p>
+                        <strong id="carnet-rol">ROL</strong>
+                        <hr>
+                        <p class="carnet-label">DOCUMENTO:</p>
+                        <p id="carnet-doc">CC 123456789</p>
+                        <p class="carnet-label">TIPO SANGRE:</p>
+                        <p id="carnet-sangre">O+</p>
+                        <p class="carnet-label">TEL. EMERGENCIA:</p>
+                        <p id="carnet-tel">300 123 4567</p>
+                    </div>
+                    <div class="qr-container">
+                         <div id="carnet-qr"></div>
+                    </div>
+                </div>
+                 <div class="carnet-footer">
+                    <p>Válido hasta: 31/12/2025</p>
+                </div>
+            </div>
+            
+            <button id="descargar-pdf">Descargar Carnet en PDF</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="qrcode.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
