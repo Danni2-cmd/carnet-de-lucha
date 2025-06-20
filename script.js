@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
     reader.onload = function (e) {
       const fotoBase64 = e.target.result;
 
+      // HTML del carnet con el borde negro y el ID del botón sin cambios
       const carnetHTML = `
-        <div id="carnet-a-descargar" style="border: 1px solid #ddd; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #fdfdfd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <div id="carnet-a-descargar" style="border: 2px solid #000000; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; background-color: #fdfdfd; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
           <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
             <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
             <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
@@ -39,20 +40,15 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
         <div style="text-align: center; margin-top: 20px;">
-          <button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Imprimir o Guardar como PDF</button>
+          <button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Generar PDF</button>
         </div>
       `;
 
       carnetWrapper.innerHTML = carnetHTML;
 
       const qrCodeContainer = document.getElementById("qr-code-container");
-      new QRCode(qrCodeContainer, {
-        text: window.location.href, // O una URL de verificación
-        width: 80,
-        height: 80,
-      });
+      new QRCode(qrCodeContainer, { text: window.location.href, width: 80, height: 80 });
 
-      // --- LÓGICA DE IMPRESIÓN FINAL ---
       document.getElementById("imprimir-btn").addEventListener("click", function () {
         window.print();
       });
