@@ -1,9 +1,9 @@
-/* --- ESTILOS DEL PORTAL (APROBADOS) --- */
+/* --- ESTILOS DEL PORTAL --- */
 :root {
     --rojo-santander: #d42e12;
     --verde-santander: #00843D;
     --negro-principal: #2c2c2c;
-    --gris-fondo: #f4f7f6;
+    --amarillo-fondo: #fad502;
     --blanco: #ffffff;
     --sombra: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
@@ -27,17 +27,18 @@ body { font-family: 'Poppins', 'Arial', sans-serif; background-color: var(--gris
 #carnet-form button[type="submit"]:hover { transform: scale(1.02); }
 
 /* Estilos para los contenedores opcionales */
-#cargo-container, #otro-rol-container {
+#cargo-container, #otro-rol-container, #entrenador-tipo-container, #entrenador-estilo-container {
     display: none;
-    display: flex; /* Usamos flex para que la etiqueta y el input se alineen bien */
     flex-direction: column;
     gap: 8px;
-    margin-top: -12px; /* Compensa el espacio extra */
+    margin-top: -12px;
 }
-/* Ocultamos por JS, pero definimos el gap aquí para que se vea bien cuando aparezca */
-#cargo-container:not([style*="display: block"]),
-#otro-rol-container:not([style*="display: block"]) {
-    display: none;
+/* Este truco asegura que el display:flex solo se aplique cuando el elemento es visible */
+#cargo-container[style*="block"],
+#otro-rol-container[style*="block"],
+#entrenador-tipo-container[style*="block"],
+#entrenador-estilo-container[style*="block"] {
+    display: flex;
 }
 
 #carnet-wrapper { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 40px; }

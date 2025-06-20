@@ -5,14 +5,22 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // --- Lógica para el campo "Otro Rol" ---
-    let rol = document.getElementById("rol").value;
-    if (rol === "Otro") {
-      rol = document.getElementById("otroRol").value;
-      if (!rol) { // Si el campo "Otro" está vacío
-        alert("Por favor, especifica el otro rol.");
-        return;
-      }
+    // --- Lógica para capturar los datos condicionales ---
+    let rolDisplay = document.getElementById("rol").value;
+    let rolValue = rolDisplay;
+
+    if (rolValue === "Otro") {
+      rolDisplay = document.getElementById("otroRol").value;
+      if (!rolDisplay) { alert("Por favor, especifica el otro rol."); return; }
+    }
+    
+    if (rolValue === "Entrenador") {
+        const tipoEntrenador = document.getElementById("tipoEntrenador").value;
+        rolDisplay += ` (${tipoEntrenador})`;
+        if (tipoEntrenador === 'Alto Rendimiento') {
+            const estiloLucha = document.getElementById("estiloLucha").value;
+            rolDisplay += ` - ${estiloLucha}`;
+        }
     }
     
     const nombre = document.getElementById("nombre").value.toUpperCase();
@@ -29,9 +37,9 @@ document.addEventListener("DOMContentLoaded", function () {
     reader.onload = function (e) {
       const fotoBase64 = e.target.result;
 
-      // --- HTML del carnet con fondo y borde negro ---
+      // --- HTML del carnet con fondo gradiente ---
       const carnetHTML = `
-        <div id="carnet-a-descargar" style="border: 2px solid #000000; background-color: #f8f9fa; border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <div id="carnet-a-descargar" style="border: 2px solid #000000; background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(240,242,245,1) 100%); border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
           <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
             <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
             <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
@@ -41,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div style="font-size: 14px; flex-grow: 1;">
               <strong style="font-size: 18px; font-weight: 900; display: block;">${nombre}</strong>
               <span style="display: block; color: #555; margin-bottom: 8px;">${tipoDocumento} ${numeroDocumento}</span>
-              <strong>Rol:</strong> ${rol.toUpperCase()}${rol === "Administrativo" ? ` - ${cargo}` : ""}<br>
+              <strong>Rol:</strong> ${rolDisplay.toUpperCase()}${rolValue === "Administrativo" ? ` - ${cargo}` : ""}<br>
               <strong>Contacto Emer:</strong> ${contacto}<br>
               <strong>Sangre y RH:</strong> ${sangre}
             </div>

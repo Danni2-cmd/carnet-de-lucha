@@ -28,7 +28,7 @@
                   <option value="C.C.">Cédula de Ciudadanía</option>
                   <option value="T.I.">Tarjeta de Identidad</option>
                   <option value="C.E.">Cédula de Extranjería</option>
-                  <option value="PPT">Permiso por Protección Temporal</option>
+                  <option value="PPT">Permiso por Protección Temporal (PPT)</option>
                   <option value="PA.">Pasaporte</option>
               </select>
               
@@ -52,13 +52,30 @@
                   <option value="Administrativo">Administrativo</option>
                   <option value="Otro">Otro...</option>
               </select>
+              
+              <div id="entrenador-tipo-container">
+                  <label>Nivel de Entrenador:</label>
+                  <select id="tipoEntrenador" onchange="manejarTipoEntrenador(this.value)">
+                      <option value="Formacion">Formación</option>
+                      <option value="Alto Rendimiento">Alto Rendimiento</option>
+                  </select>
+              </div>
 
-              <div id="cargo-container" style="display: none;">
+              <div id="entrenador-estilo-container">
+                  <label>Estilo de Lucha:</label>
+                  <select id="estiloLucha">
+                      <option value="Libre Masculino">Libre Masculino</option>
+                      <option value="Libre Femenino">Libre Femenino</option>
+                      <option value="Grecorromano">Grecorromano</option>
+                  </select>
+              </div>
+
+              <div id="cargo-container">
                   <label>Cargo (si es administrativo):</label>
                   <input type="text" id="cargo">
               </div>
 
-              <div id="otro-rol-container" style="display: none;">
+              <div id="otro-rol-container">
                   <label>Especificar otro rol:</label>
                   <input type="text" id="otroRol">
               </div>
@@ -77,13 +94,18 @@
   <script src="script.js"></script>
 
   <script>
-    // Esta función ahora maneja ambos campos opcionales
+    // Funciones para mostrar/ocultar los campos condicionales
     function manejarRol(valor) {
-      const cargoDiv = document.getElementById("cargo-container");
-      const otroRolDiv = document.getElementById("otro-rol-container");
-      
-      cargoDiv.style.display = valor === "Administrativo" ? "block" : "none";
-      otroRolDiv.style.display = valor === "Otro" ? "block" : "none";
+      document.getElementById("cargo-container").style.display = valor === "Administrativo" ? "block" : "none";
+      document.getElementById("otro-rol-container").style.display = valor === "Otro" ? "block" : "none";
+      document.getElementById("entrenador-tipo-container").style.display = valor === "Entrenador" ? "block" : "none";
+      // Si se cambia de rol, ocultar el de estilo por defecto
+      if (valor !== "Entrenador") {
+        document.getElementById("entrenador-estilo-container").style.display = "none";
+      }
+    }
+    function manejarTipoEntrenador(valor) {
+        document.getElementById("entrenador-estilo-container").style.display = valor === "Alto Rendimiento" ? "block" : "none";
     }
   </script>
 
