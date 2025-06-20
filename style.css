@@ -26,8 +26,18 @@ form {
     flex-direction: column;
     gap: 18px;
 }
-form h1 { color: #026937; margin: 0 0 15px 0; text-align: center; font-size: 24px; }
-form label { font-weight: 600; font-size: 14px; color: #333; margin-bottom: -10px; }
+form h1 {
+    color: #026937;
+    margin: 0 0 15px 0;
+    text-align: center;
+    font-size: 24px;
+}
+form label { 
+    font-weight: 600; 
+    font-size: 14px; 
+    color: #333; 
+    margin-bottom: -10px;
+}
 form input, form select, form button {
     width: 100%;
     padding: 12px;
@@ -58,17 +68,36 @@ form button {
     display: flex;
 }
 #carnet-wrapper {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
     margin-top: 40px;
 }
-/* Estilos de impresión */
+
+/* --- ESTILOS DE IMPRESIÓN CORREGIDOS --- */
 @media print {
-  body > .main-content { visibility: hidden; }
-  #carnet-wrapper, #carnet-wrapper * { visibility: visible; }
-  #carnet-wrapper { position: absolute; left: 0; top: 0; margin: 0; padding: 0; }
-  #carnet-a-descargar { border: none !important; box-shadow: none !important; }
-  #imprimir-btn-container { display: none !important; }
+  body > .main-content {
+    visibility: hidden;
+  }
+  #carnet-wrapper, #carnet-wrapper * {
+    visibility: visible;
+  }
+  #carnet-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+  }
+  #carnet-a-descargar {
+    box-shadow: none !important;
+    /* --- LA SOLUCIÓN MÁGICA PARA FORZAR LA IMPRESIÓN DE COLORES Y FONDOS --- */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #imprimir-btn-container {
+    display: none !important;
+  }
 }
