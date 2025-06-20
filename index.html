@@ -5,6 +5,9 @@
   <title>Carnet - Liga Santandereana de Lucha Olímpica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -14,14 +17,22 @@
       <label>Nombre completo:</label>
       <input type="text" id="nombre" required>
 
-      <label>Tipo y número de documento:</label>
-      <input type="text" id="documento" required>
-
+      <label>Tipo de documento:</label>
+      <select id="tipoDocumento" required>
+        <option value="C.C.">Cédula de Ciudadanía</option>
+        <option value="T.I.">Tarjeta de Identidad</option>
+        <option value="C.E.">Cédula de Extranjería</option>
+        <option value="PA.">Pasaporte</option>
+      </select>
+      
+      <label>Número de documento:</label>
+      <input type="text" id="numeroDocumento" required>
+      
       <label>Contacto de emergencia:</label>
-      <input type="text" id="contacto" required>
+      <input type="tel" id="contacto" required>
 
       <label>Tipo de sangre:</label>
-      <input type="text" id="sangre" required>
+      <input type="text" id="sangre" placeholder="Ej: O+" required>
 
       <label>Rol:</label>
       <select id="rol" required onchange="mostrarCargo(this.value)">
@@ -46,11 +57,11 @@
     <div id="carnet-container" style="margin-top: 40px;"></div>
   </div>
 
-  <!-- Librería para PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="script.js"></script>
 
   <script>
+    // Esta función para mostrar/ocultar el cargo está perfecta
     function mostrarCargo(valor) {
       const cargoDiv = document.getElementById("cargo-container");
       cargoDiv.style.display = valor === "Administrativo" ? "block" : "none";
