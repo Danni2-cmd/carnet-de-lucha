@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Carnetización con Firebase - Liga de Lucha</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://cdnjs.cloudflare.com;">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,14 +47,14 @@
                     <option value="Otro">Otro...</option>
                 </select>
 
-                <div id="entrenador-tipo-container">
+                <div id="entrenador-tipo-container" style="display:none;">
                     <label>Nivel de Entrenador:</label>
                     <select id="tipoEntrenador" onchange="manejarTipoEntrenador(this.value)">
                         <option value="Formacion">Formación</option>
                         <option value="Alto Rendimiento">Alto Rendimiento</option>
                     </select>
                 </div>
-                <div id="entrenador-estilo-container">
+                <div id="entrenador-estilo-container" style="display:none;">
                     <label>Estilo de Lucha:</label>
                     <select id="estiloLucha">
                         <option value="Libre Masculino">Libre Masculino</option>
@@ -60,8 +62,8 @@
                         <option value="Grecorromano">Grecorromano</option>
                     </select>
                 </div>
-                <div id="cargo-container"><label>Cargo (si es administrativo):</label><input type="text" id="cargo"></div>
-                <div id="otro-rol-container"><label>Especificar otro rol:</label><input type="text" id="otroRol"></div>
+                <div id="cargo-container" style="display:none;"><label>Cargo (si es administrativo):</label><input type="text" id="cargo"></div>
+                <div id="otro-rol-container" style="display:none;"><label>Especificar otro rol:</label><input type="text" id="otroRol"></div>
                 
                 <label>Foto:</label><input type="file" id="foto" accept="image/*" required>
                 
@@ -72,6 +74,8 @@
     <div id="carnet-wrapper"></div>
     <div id="status-message" style="text-align:center; margin-top: 20px; font-weight: bold;"></div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="qrcode.min.js"></script>
     <script src="script.js" type="module"></script>
 
@@ -95,6 +99,11 @@
         function manejarTipoEntrenador(valor) {
             document.getElementById("entrenador-estilo-container").style.display = valor === "Alto Rendimiento" ? "block" : "none";
         }
+
+        // Para ocultar los campos al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            manejarRol('');
+        });
     </script>
 </body>
 </html>
