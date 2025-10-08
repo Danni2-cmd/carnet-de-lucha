@@ -1,112 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Carnet Deportivo</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f4f4f4;
-      text-align: center;
-    }
-    .carnet {
-      width: 350px;
-      margin: auto;
-      padding: 20px;
-      background: linear-gradient(180deg, #006400, #FFD700); /* verde a amarillo */
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      color: #000;
-      position: relative;
-    }
-    .logo-liga {
-      width: 60px;
-      position: absolute;
-      top: 15px;
-      left: 15px;
-    }
-    .titulo-liga {
-      font-weight: bold;
-      font-size: 16px;
-      margin-bottom: 10px;
-      margin-top: 0;
-    }
-    .foto {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    canvas {
-      margin-top: 10px;
-    }
-    .btn-descarga {
-      margin-top: 15px;
-      padding: 8px 16px;
-      background-color: #000;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Carnetización con Firebase - Liga de Lucha</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdnjs.cloudflare.com https://www.gstatic.com; connect-src 'self' https://firestore.googleapis.com;">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="carnet" id="carnet">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Escudo_de_Santander_%28Colombia%29.svg/640px-Escudo_de_Santander_%28Colombia%29.svg.png" class="logo-liga" alt="Logo Liga" />
-    <h3 class="titulo-liga">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h3>
-    <img id="foto" class="foto" src="" alt="Foto del deportista" />
-    <h2 id="nombre"></h2>
-    <p id="documento"></p>
-    <p id="emergencia"></p>
-    <p id="sangre"></p>
-    <p id="rol"></p>
-    <p id="cargo" style="display:none;"></p>
-    <canvas id="qrCanvas"></canvas>
-    <button class="btn-descarga" onclick="descargarPDF()">Descargar Carnet</button>
-  </div>
+    <div id="main-content">
+        <header class="main-header">
+            <img src="logo.png" alt="Logo de la Liga" class="header-logo">
+            <h1>Portal de Carnetización Automatizado</h1>
+            <h2>Liga Santandereana de Lucha Olímpica</h2>
+        </header>
+        <div class="container">
+            <form id="carnet-form">
+                <label>Nombre completo:</label><input type="text" id="nombre" required>
+                
+                <label>Tipo de documento:</label>
+                <select id="tipoDocumento" required>
+                    <option value="C.C.">Cédula de Ciudadanía</option>
+                    <option value="T.I.">Tarjeta de Identidad</option>
+                    <option value="C.E.">Cédula de Extranjería</option>
+                    <option value="PPT">Permiso por Protección Temporal (PPT)</option>
+                    <option value="PA.">Pasaporte</option>
+                </select>
+                
+                <label>Número de documento:</label><input type="text" id="numeroDocumento" required>
+                <label>Contacto de emergencia:</label><input type="tel" id="contacto" required>
+                <label>Tipo de sangre:</label><input type="text" id="sangre" placeholder="Ej: O+" required>
+                
+                <label>Rol:</label>
+                <select id="rol" required>
+                    <option value="">Selecciona...</option>
+                    <option value="Deportista">Deportista</option>
+                    <option value="Entrenador">Entrenador</option>
+                    <option value="Juez">Juez</option>
+                    <option value="Administrativo">Administrativo</option>
+                    <option value="Otro">Otro...</option>
+                </select>
 
-  <!-- QR y PDF Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/qrious"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+                <div id="entrenador-tipo-container"><label>Nivel de Entrenador:</label><select id="tipoEntrenador"><option value="Formacion">Formación</option><option value="Alto Rendimiento">Alto Rendimiento</option></select></div>
+                <div id="entrenador-estilo-container"><label>Estilo de Lucha:</label><select id="estiloLucha"><option value="Libre Masculino">Libre Masculino</option><option value="Libre Femenino">Libre Femenino</option><option value="Grecorromano">Grecorromano</option></select></div>
+                <div id="cargo-container"><label>Cargo (si es administrativo):</label><input type="text" id="cargo"></div>
+                <div id="otro-rol-container"><label>Especificar otro rol:</label><input type="text" id="otroRol"></div>
+                
+                <label>Foto:</label><input type="file" id="foto" accept="image/*" required>
+                
+                <button type="submit" id="submit-btn">Registrar y Generar Carnet</button>
+            </form>
+        </div>
+    </div>
 
-  <script>
-    const data = JSON.parse(sessionStorage.getItem("carnetData"));
+    <div id="carnet-wrapper"></div>
+    <div id="status-message"></div>
 
-    if (!data) {
-      document.body.innerHTML = "<p style='color:red;'>Error: No hay datos del carnet.</p>";
-    } else {
-      document.getElementById('nombre').textContent = 'Nombre: ' + data.nombre;
-      document.getElementById('documento').textContent = 'Documento: ' + data.tipoDocumento + ' ' + data.numeroDocumento;
-      document.getElementById('emergencia').textContent = 'Contacto de emergencia: ' + data.emergencia;
-      document.getElementById('sangre').textContent = 'Tipo de sangre: ' + data.sangre;
-      document.getElementById('rol').textContent = 'Rol: ' + data.rol;
-      document.getElementById('foto').src = data.foto;
-
-      if (data.rol === 'Administrativo') {
-        document.getElementById('cargo').style.display = 'block';
-        document.getElementById('cargo').textContent = 'Cargo: ' + data.cargo;
-      }
-
-      new QRious({
-        element: document.getElementById("qrCanvas"),
-        value: window.location.href,
-        size: 100
-      });
-    }
-
-    function descargarPDF() {
-      const carnet = document.getElementById("carnet");
-      html2pdf().from(carnet).set({
-        margin: 0,
-        filename: "carnet_" + data.nombre.replace(/\s+/g, "_") + ".pdf",
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      }).save();
-    }
-  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="qrcode.min.js"></script>
+    
+    <script src="script.js" type="module"></script>
 </body>
 </html>
