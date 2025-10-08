@@ -1,103 +1,58 @@
-/* --- ESTILOS GENERALES Y DEL FORMULARIO --- */
-body {
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-    background: #f0f4f3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    gap: 30px;
+:root {
+    --rojo-santander: #d42e12;
+    --verde-santander: #00843D;
+    --amarillo-santander: #FCD116; 
+    --negro-principal: #2c2c2c;
+    --gris-oscuro: #333333;
+    --gris-claro: #f0f2f5;
+    --blanco: #ffffff;
+    --sombra: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
-.main-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-form {
-    background: #ffffff;
-    padding: 30px 35px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    max-width: 500px;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-form h1 {
-    color: #026937;
-    margin: 0 0 15px 0;
-    text-align: center;
-    font-size: 24px;
-}
-form label { 
-    font-weight: 600; 
-    font-size: 14px; 
-    color: #333; 
-    margin-bottom: -10px;
-}
-form input, form select, form button {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #bbb;
-    border-radius: 6px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-form button {
-    background-color: #026937;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border-color: #026937;
-    margin-top: 10px;
-    font-size: 16px;
-}
-/* Estilos para los contenedores opcionales */
-#cargo-container, #otro-rol-container, #entrenador-tipo-container, #entrenador-estilo-container {
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-}
-#cargo-container[style*="block"],
-#otro-rol-container[style*="block"],
-#entrenador-tipo-container[style*="block"],
-#entrenador-estilo-container[style*="block"] {
-    display: flex;
-}
-#carnet-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 40px;
-}
+body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); color: var(--negro-principal); margin: 0; padding: 30px; }
+.main-header { text-align: center; margin-bottom: 40px; }
+.header-logo { width: 70px; }
+.main-header h1 { color: var(--negro-principal); margin: 10px 0 5px 0; font-size: 2.2em; }
+.main-header h2 { color: var(--verde-santander); margin: 0; font-size: 1.1em; font-weight: 400; }
+.container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; }
+.form-container, .carnet-container { background: var(--blanco); padding: 35px; border-radius: 16px; box-shadow: var(--sombra); width: 100%; max-width: 600px; box-sizing: border-box; }
+.carnet-container { display: none; flex-direction: column; align-items: center; }
+.form-container h3, .carnet-container h3 { text-align: center; font-size: 1.6em; color: var(--rojo-santander); margin-top: 0; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+.form-group.full-width { grid-column: span 2; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9em; }
+.form-input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; box-sizing: border-box; transition: all 0.2s; }
+.form-input:focus { outline: none; border-color: var(--rojo-santander); box-shadow: 0 0 0 4px rgba(212, 46, 18, 0.1); }
+.btn { width: 100%; padding: 15px; border: none; border-radius: 8px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: transform 0.2s; }
+.btn:hover { transform: scale(1.02); }
+.btn-primary { background-color: var(--rojo-santander); color: var(--blanco); margin-top: 20px; }
+.btn-secondary { background-color: var(--verde-santander); color: var(--blanco); margin-top: 20px; max-width: 300px; }
 
-/* --- ESTILOS DE IMPRESIÓN CORREGIDOS --- */
-@media print {
-  body > .main-content {
-    visibility: hidden;
-  }
-  #carnet-wrapper, #carnet-wrapper * {
-    visibility: visible;
-  }
-  #carnet-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-  }
-  #carnet-a-descargar {
-    box-shadow: none !important;
-    /* --- LA SOLUCIÓN MÁGICA PARA FORZAR LA IMPRESIÓN DE COLORES Y FONDOS --- */
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  #imprimir-btn-container {
-    display: none !important;
-  }
-}
+/* --- DISEÑO FINAL DEL CARNET (Basado en Píxeles) --- */
+#carnet-virtual { width: 428px; height: 270px; box-sizing: border-box; background-color: var(--blanco); font-family: 'Poppins', sans-serif; display: flex; flex-direction: column; overflow: hidden; border-radius: 16px; box-shadow: var(--sombra); border: 1px solid #ddd; }
+.carnet-header { display: flex; align-items: center; padding: 8px 10px; background-color: #f5f5f5; border-bottom: 1px solid #ddd; }
+.logo-carnet { height: 28px; width: 28px; margin-right: 8px; }
+.carnet-header span { font-size: 10px; font-weight: 700; color: var(--negro-principal); }
+.carnet-body { display: flex; padding: 12px; gap: 12px; flex-grow: 1; }
+.foto-container { width: 110px; height: 140px; flex-shrink: 0; }
+#carnet-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+.info-container { display: flex; flex-direction: column; flex-grow: 1; min-width: 0; }
+.info-nombre p { font-size: 18px; font-weight: 700; margin: 0 0 2px 0; line-height: 1.2; word-break: break-word; }
+.info-nombre span { font-size: 12px; color: #666; }
+.rol-barra { padding: 4px 8px; margin: 8px 0; border-radius: 5px; text-align: center; }
+.rol-barra span { font-size: 12px; font-weight: 700; color: var(--blanco); text-transform: uppercase; }
+.info-detalles { display: flex; margin-top: auto; align-items: flex-end; width: 100%; gap: 10px; }
+.detalles-contacto { font-size: 10px; line-height: 1.4; flex-grow: 1; }
+.detalles-contacto label { font-weight: 700; color: #333; display: block; }
+.detalles-contacto span { color: #555; font-weight: 500; }
+#carnet-sangre { font-size: 12px; font-weight: 700; margin-top: 4px; display: block; }
+#carnet-sangre::before { content: ""; }
+.qr-code { width: 70px; height: 70px; flex-shrink: 0; }
+.qr-code img { width: 100% !important; height: 100% !important; display: block; }
+[data-rol="deportista"] .rol-barra { background-color: var(--amarillo-santander); }
+[data-rol="deportista"] .info-nombre p { color: var(--amarillo-santander); }
+[data-rol="entrenador"] .rol-barra { background-color: var(--verde-santander); }
+[data-rol="entrenador"] .info-nombre p { color: var(--verde-santander); }
+[data-rol="juez"] .rol-barra { background-color: var(--rojo-santander); }
+[data-rol="juez"] .info-nombre p { color: var(--rojo-santander); }
+[data-rol="administrativo"] .rol-barra { background-color: var(--gris-oscuro); }
+[data-rol="administrativo"] .info-nombre p { color: var(--gris-oscuro); }
