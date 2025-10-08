@@ -27,11 +27,10 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); 
 .btn-primary { background-color: var(--rojo-santander); color: var(--blanco); margin-top: 20px; }
 .btn-secondary { background-color: var(--verde-santander); color: var(--blanco); margin-top: 20px; max-width: 300px; }
 
-/* --- DISEÑO FINAL DEL CARNET (v5 - Basado en Píxeles) --- */
+/* --- DISEÑO FINAL v6 (AJUSTES AGRESIVOS DE TAMAÑO) --- */
 #carnet-virtual {
-    /* AJUSTE A PÍXELES PARA MEJOR VISUALIZACIÓN EN PANTALLA */
-    width: 428px; /* Ancho basado en la proporción 85.6 */
-    height: 270px; /* Alto basado en la proporción 54 */
+    width: 428px; /* 85.6mm a ~120DPI */
+    height: 270px; /* 54mm a ~120DPI */
     box-sizing: border-box;
     background-color: var(--blanco);
     font-family: 'Poppins', sans-serif;
@@ -45,28 +44,74 @@ body { font-family: 'Poppins', sans-serif; background-color: var(--gris-claro); 
 .carnet-header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px 10px; /* AJUSTE: Menos padding */
     background-color: #f5f5f5;
     border-bottom: 1px solid #ddd;
 }
-.carnet-header img { height: 30px; width: 30px; margin-right: 10px; }
-.carnet-header span { font-size: 11px; font-weight: 700; color: var(--negro-principal); }
-.carnet-body { display: flex; padding: 15px; gap: 15px; flex-grow: 1; }
-.foto-container { width: 120px; height: 150px; flex-shrink: 0; }
-#carnet-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+.carnet-header img { height: 28px; width: 28px; margin-right: 8px; } /* AJUSTE: Tamaño logo */
+.carnet-header span { font-size: 10px; font-weight: 700; color: var(--negro-principal); } /* AJUSTE: Tamaño fuente */
+.carnet-body { display: flex; padding: 12px; gap: 12px; flex-grow: 1; } /* AJUSTE: Menos padding y gap */
+.foto-container { width: 110px; height: 140px; flex-shrink: 0; } /* AJUSTE: Tamaño foto */
+#carnet-foto { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
 
-.info-container { display: flex; flex-direction: column; flex-grow: 1; }
-.info-nombre p { font-size: 22px; font-weight: 900; margin: 0 0 5px 0; line-height: 1.1; word-break: break-word; }
-.info-nombre span { font-size: 14px; color: #666; }
-.rol-barra { padding: 5px 10px; margin: 10px 0; border-radius: 5px; text-align: center; }
-.rol-barra span { font-size: 14px; font-weight: 700; color: var(--blanco); text-transform: uppercase; }
-.info-detalles { display: flex; margin-top: auto; align-items: flex-end; width: 100%; }
-.detalles-contacto { font-size: 11px; line-height: 1.5; flex-grow: 1; }
-.detalles-contacto label { font-weight: 700; color: #333; display: block; }
-.detalles-contacto span { color: #555; font-weight: 500; }
-#carnet-sangre { font-size: 14px; font-weight: 700; margin-top: 5px; display: block; }
+.info-container { display: flex; flex-direction: column; flex-grow: 1; min-width: 0; /* Evita desbordamiento */ }
+.info-nombre p {
+    font-size: 18px; /* AJUSTE DRÁSTICO: Tamaño fuente nombre */
+    font-weight: 700; /* AJUSTE: Menos grueso */
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+    word-break: break-word; 
+}
+.info-nombre span {
+    font-size: 12px; /* AJUSTE: Tamaño fuente documento */
+    color: #666;
+}
+.rol-barra {
+    padding: 4px 8px; /* AJUSTE: Menos padding */
+    margin: 8px 0; /* AJUSTE: Menos margen */
+    border-radius: 5px;
+    text-align: center;
+}
+.rol-barra span {
+    font-size: 12px; /* AJUSTE DRÁSTICO: Tamaño fuente rol */
+    font-weight: 700;
+    color: var(--blanco);
+    text-transform: uppercase;
+}
+.info-detalles {
+    display: flex;
+    margin-top: auto; /* EMPUJA ESTE BLOQUE HACIA ABAJO */
+    align-items: flex-end;
+    width: 100%;
+    gap: 10px; /* AJUSTE: Espacio entre detalles y QR */
+}
+.detalles-contacto {
+    font-size: 10px; /* AJUSTE DRÁSTICO: Tamaño fuente detalles */
+    line-height: 1.4;
+    flex-grow: 1;
+}
+.detalles-contacto label {
+    font-weight: 700;
+    color: #333;
+    display: block;
+}
+.detalles-contacto span {
+    color: #555;
+    font-weight: 500;
+}
+#carnet-sangre {
+    font-size: 12px; /* AJUSTE: Tamaño fuente sangre */
+    font-weight: 700;
+    margin-top: 4px;
+    display: block;
+}
 #carnet-sangre::before { content: ""; }
-.qr-code { width: 80px; height: 80px; flex-shrink: 0; }
+
+.qr-code {
+    width: 70px; /* AJUSTE: QR más pequeño */
+    height: 70px;
+    flex-shrink: 0;
+}
 .qr-code img { width: 100% !important; height: 100% !important; display: block; }
 
 /* COLORES DINÁMICOS (SIN CAMBIOS) */
