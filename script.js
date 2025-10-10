@@ -70,7 +70,6 @@ function setupForm() {
             return;
         }
 
-        // --- LÓGICA AÑADIDA PARA ROLES CONDICIONALES ---
         let rolSeleccionado = document.getElementById("rol").value;
         let rolParaGuardar = rolSeleccionado;
         if (rolSeleccionado === "Otro") {
@@ -87,7 +86,6 @@ function setupForm() {
             const cargo = document.getElementById("cargo").value;
             if (cargo) rolParaGuardar += ` - ${cargo}`;
         }
-        // --- FIN DE LA LÓGICA AÑADIDA ---
 
         try {
             statusMessage.textContent = "Subiendo foto...";
@@ -102,7 +100,7 @@ function setupForm() {
                 numeroDocumento: numeroDocumento,
                 contacto: document.getElementById("contacto").value,
                 sangre: document.getElementById("sangre").value.toUpperCase(),
-                rol: rolParaGuardar, // Se guarda el rol detallado
+                rol: rolParaGuardar,
                 fotoUrl: downloadURL,
                 fechaRegistro: new Date().toISOString()
             };
@@ -115,8 +113,8 @@ function setupForm() {
             displayCarnet(afiliadoData, true);
 
         } catch (error) {
-            console.error("Error:", error);
-            statusMessage.textContent = `Error al registrar.`;
+            console.error("Error detallado:", error);
+            statusMessage.textContent = `Error al registrar. Revisa la consola (F12) para más detalles.`;
         } finally {
             submitBtn.disabled = false;
         }
@@ -125,28 +123,30 @@ function setupForm() {
 
 function displayCarnet(data, showDownloadButton) {
     const carnetWrapper = document.getElementById("carnet-wrapper");
-    // Se usa un gradiente sutil con los colores de Santander
+    // SE ELIMINAN LOS ESTILOS EN LÍNEA Y SE USAN CLASES
     const carnetHTML = `
-      <div style="margin-top:20px; text-align:center;"><h3>Vista Previa del Carnet</h3></div>
-      <div id="carnet-a-descargar" style="border: 2px solid #000000; background: linear-gradient(135deg, rgba(255,253,240,1) 0%, rgba(232,248,245,1) 100%); border-radius: 12px; padding: 16px; width: 428px; font-family: 'Poppins', Arial, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-          <div style="text-align: center; border-bottom: 1px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">
-              <img src="logo.png" alt="Logo Liga" style="max-width: 60px;">
-              <h2 style="color: #004d00; margin: 4px 0; font-size: 14px; font-weight: 700;">LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
-          </div>
-          <div style="display: flex; align-items: center; gap: 16px;">
-              <img src="${data.fotoUrl}" alt="Foto" style="width: 110px; height: 140px; object-fit: cover; border-radius: 8px;">
-              <div style="font-size: 14px; flex-grow: 1; text-align: left;">
-                  <strong style="font-size: 18px; font-weight: 900; display: block;">${data.nombre}</strong>
-                  <span style="display: block; color: #555; margin-bottom: 8px;">${data.tipoDocumento} ${data.numeroDocumento}</span>
-                  <strong>Rol:</strong> ${data.rol}<br>
-                  <strong>Contacto Emer:</strong> ${data.contacto}<br>
-                  <strong>Sangre y RH:</strong> ${data.sangre}
+      <div class="vista-previa-container">
+          <h3>${showDownloadButton ? 'Vista Previa del Carnet' : 'Carnet Verificado'}</h3>
+          <div id="carnet-a-descargar">
+              <div class="carnet-header">
+                  <img src="logo.png" alt="Logo Liga">
+                  <h2>LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
               </div>
-              <div id="qr-code-container" style="width: 80px; height: 80px; align-self: flex-end;"></div>
+              <div class="carnet-body">
+                  <img class="foto-afiliado" src="${data.fotoUrl}" alt="Foto">
+                  <div class="carnet-info">
+                      <strong class="nombre-afiliado">${data.nombre}</strong>
+                      <span class="documento-afiliado">${data.tipoDocumento} ${data.numeroDocumento}</span>
+                      <strong>Rol:</strong> ${data.rol}<br>
+                      <strong>Contacto Emer:</strong> ${data.contacto}<br>
+                      <strong>Sangre y RH:</strong> ${data.sangre}
+                  </div>
+                  <div id="qr-code-container"></div>
+              </div>
           </div>
+          ${showDownloadButton ? `<div id="imprimir-btn-container"><button id="imprimir-btn" class="btn-imprimir">Imprimir o Guardar como PDF</button></div>` : ''}
+          ${!showDownloadButton ? `<h3 class="verificado-mensaje">✓ Carnet Válido y Verificado</h3>` : ''}
       </div>
-      ${showDownloadButton ? `<div id="imprimir-btn-container" style="text-align: center; margin-top: 20px;"><button id="imprimir-btn" style="padding: 12px 25px; background-color: #00843D; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">Imprimir o Guardar como PDF</button></div>` : ''}
-      ${!showDownloadButton ? `<h3 style="text-align:center; color: #026937;">✓ Carnet Válido y Verificado</h3>` : ''}
     `;
 
     carnetWrapper.innerHTML = carnetHTML;
