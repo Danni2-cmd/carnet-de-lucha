@@ -94,6 +94,7 @@ form button {
     display: flex;
     align-items: center;
     padding: 12px 15px;
+    /* --- AQUÍ SE APLICA LA BANDERA --- */
     background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bandera-santander.jpg');
     background-size: cover;
     background-position: center;
@@ -186,4 +187,3 @@ form button {
     display: none !important;
   }
 }
-
