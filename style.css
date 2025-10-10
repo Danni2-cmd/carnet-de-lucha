@@ -75,71 +75,69 @@ form button {
     margin-top: 40px;
 }
 
-/* --- ESTILOS DEL CARNET (SECCIÓN MODIFICADA) --- */
+/* --- ESTILOS DEL CARNET (SECCIÓN CORREGIDA Y MEJORADA) --- */
+.vista-previa-container {
+    text-align: center;
+}
 #carnet-a-descargar {
-    border: 1px solid #ccc; /* Borde más sutil */
-    background: #ffffff;
+    border: 1px solid #ccc;
+    background: white;
     border-radius: 12px;
+    padding: 0;
     width: 428px;
     font-family: 'Poppins', Arial, sans-serif;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    overflow: hidden; /* Importante para que la bandera no se salga de las esquinas redondeadas */
+    overflow: hidden;
 }
 
-/* -- NUEVO HEADER CON BANDERA Y TAMAÑOS AJUSTADOS -- */
 .carnet-header {
     display: flex;
     align-items: center;
-    padding: 12px 15px; /* Más espacio vertical y horizontal */
+    padding: 12px 15px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Flag_of_Santander_Department.svg/1200px-Flag_of_Santander_Department.svg.png');
     background-size: cover;
     background-position: center;
 }
-
 .carnet-header img {
-    height: 40px; /* Logo más grande */
+    height: 40px; /* Tamaño del logo aumentado */
     width: 40px;
     margin-right: 12px;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente para resaltar */
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     padding: 2px;
     box-sizing: border-box;
 }
-
 .carnet-header h2 {
-    font-size: 15px; /* Texto más grande */
+    font-size: 15px; /* Tamaño del título aumentado */
     font-weight: 700;
-    color: #ffffff; /* Texto blanco para contrastar */
+    color: #ffffff;
     margin: 0;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Sombra para legibilidad */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
 }
 
-/* -- RESTO DE ESTILOS DEL CARNET (SIN CAMBIOS) -- */
 .carnet-body {
     display: flex;
     align-items: center;
     gap: 16px;
     padding: 16px;
 }
-
-.carnet-body img {
+.foto-afiliado {
     width: 110px;
     height: 140px;
     object-fit: cover;
     border-radius: 8px;
 }
-
 .carnet-info {
     font-size: 14px;
     flex-grow: 1;
     text-align: left;
 }
-.carnet-info strong {
+.nombre-afiliado {
     font-size: 18px;
     font-weight: 900;
     display: block;
 }
-.carnet-info span {
+.documento-afiliado {
     display: block;
     color: #555;
     margin-bottom: 8px;
@@ -148,6 +146,20 @@ form button {
     width: 80px;
     height: 80px;
     align-self: flex-end;
+}
+.btn-imprimir {
+    padding: 12px 25px;
+    background-color: #00843D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+.verificado-mensaje {
+    text-align: center;
+    color: #026937;
 }
 
 /* --- ESTILOS DE IMPRESIÓN (SIN CAMBIOS) --- */
