@@ -94,7 +94,7 @@ form button {
     display: flex;
     align-items: center;
     padding: 12px 15px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Flag_of_Santander_Department.svg/1200px-Flag_of_Santander_Department.svg.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bandera-santander.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -186,3 +186,4 @@ form button {
     display: none !important;
   }
 }
+
