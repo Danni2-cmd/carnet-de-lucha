@@ -1,4 +1,4 @@
-/* --- ESTILOS GENERALES Y DEL FORMULARIO --- */
+/* --- ESTILOS GENERALES Y DEL FORMULARIO (SIN CAMBIOS) --- */
 body {
     font-family: 'Poppins', 'Segoe UI', sans-serif;
     background: #f0f4f3;
@@ -55,7 +55,6 @@ form button {
     margin-top: 10px;
     font-size: 16px;
 }
-/* Estilos para los contenedores opcionales */
 #cargo-container, #otro-rol-container, #entrenador-tipo-container, #entrenador-estilo-container {
     display: none;
     flex-direction: column;
@@ -76,7 +75,82 @@ form button {
     margin-top: 40px;
 }
 
-/* --- ESTILOS DE IMPRESIÓN CORREGIDOS --- */
+/* --- ESTILOS DEL CARNET (SECCIÓN MODIFICADA) --- */
+#carnet-a-descargar {
+    border: 1px solid #ccc; /* Borde más sutil */
+    background: #ffffff;
+    border-radius: 12px;
+    width: 428px;
+    font-family: 'Poppins', Arial, sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden; /* Importante para que la bandera no se salga de las esquinas redondeadas */
+}
+
+/* -- NUEVO HEADER CON BANDERA Y TAMAÑOS AJUSTADOS -- */
+.carnet-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px; /* Más espacio vertical y horizontal */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Flag_of_Santander_Department.svg/1200px-Flag_of_Santander_Department.svg.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.carnet-header img {
+    height: 40px; /* Logo más grande */
+    width: 40px;
+    margin-right: 12px;
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente para resaltar */
+    border-radius: 50%;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+.carnet-header h2 {
+    font-size: 15px; /* Texto más grande */
+    font-weight: 700;
+    color: #ffffff; /* Texto blanco para contrastar */
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Sombra para legibilidad */
+}
+
+/* -- RESTO DE ESTILOS DEL CARNET (SIN CAMBIOS) -- */
+.carnet-body {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+}
+
+.carnet-body img {
+    width: 110px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.carnet-info {
+    font-size: 14px;
+    flex-grow: 1;
+    text-align: left;
+}
+.carnet-info strong {
+    font-size: 18px;
+    font-weight: 900;
+    display: block;
+}
+.carnet-info span {
+    display: block;
+    color: #555;
+    margin-bottom: 8px;
+}
+#qr-code-container {
+    width: 80px;
+    height: 80px;
+    align-self: flex-end;
+}
+
+/* --- ESTILOS DE IMPRESIÓN (SIN CAMBIOS) --- */
 @media print {
   body > .main-content {
     visibility: hidden;
@@ -93,7 +167,6 @@ form button {
   }
   #carnet-a-descargar {
     box-shadow: none !important;
-    /* --- LA SOLUCIÓN MÁGICA PARA FORZAR LA IMPRESIÓN DE COLORES Y FONDOS --- */
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
