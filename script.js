@@ -170,7 +170,7 @@ function displayCarnet(data, showDownloadButton) {
     if (document.getElementById("qr-code-container")) {
         const qrCodeContainer = document.getElementById("qr-code-container");
         const verificationUrl = `${window.location.origin}${window.location.pathname}?id=${data.numeroDocumento}`;
-        new QRCode(qrCodeContainer, { text: verificationUrl, width: 80, height: 80 });
+        new QRCode(qrCodeContainer, { text: verificationUrl, width: 65, height: 65 }); // QR más pequeño
     }
 
     if (showDownloadButton) {
