@@ -89,25 +89,25 @@ form button {
     overflow: hidden;
 }
 
-/* -- HEADER CON TAMAÑOS Y GROSOR AJUSTADOS -- */
+/* -- HEADER CON LOGO MÁS GRANDE -- */
 .carnet-header {
     display: flex;
     align-items: center;
-    padding: 8px 15px; /* Reducimos padding para dar más espacio */
+    padding: 8px 15px;
     background-color: #f0f4f3;
     border-bottom: 1px solid #ddd;
 }
 .carnet-header img {
-    height: 55px; /* AUMENTADO: Logo más grande */
-    width: 55px;  /* AUMENTADO: Logo más grande */
-    margin-right: 15px; /* Más separación */
+    height: 65px; /* AUMENTADO: Logo mucho más grande */
+    width: 65px;  /* AUMENTADO: Logo mucho más grande */
+    margin-right: 15px;
 }
 .carnet-header h2 {
-    font-size: 16px; /* Tamaño ajustado para una línea */
-    font-weight: 900;  /* AUMENTADO: Fuente más robusta (negra) */
+    font-size: 16px;
+    font-weight: 900;
     color: #000000;
     margin: 0;
-    line-height: 1.2; /* Asegura que no se corte */
+    line-height: 1.2;
 }
 
 /* -- CUERPO DEL CARNET -- */
