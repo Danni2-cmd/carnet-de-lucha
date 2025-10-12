@@ -75,7 +75,7 @@ form button {
     margin-top: 40px;
 }
 
-/* --- ESTILOS DEL CARNET (SECCIÓN CORREGIDA Y MEJORADA) --- */
+/* --- ESTILOS DEL CARNET --- */
 .vista-previa-container {
     text-align: center;
 }
@@ -89,7 +89,7 @@ form button {
     overflow: hidden;
 }
 
-/* -- HEADER -- */
+/* -- HEADER CON TAMAÑOS AUMENTADOS -- */
 .carnet-header {
     display: flex;
     align-items: center;
@@ -98,18 +98,18 @@ form button {
     border-bottom: 1px solid #ddd;
 }
 .carnet-header img {
-    height: 40px;
-    width: 40px;
+    height: 48px; /* AUMENTADO */
+    width: 48px;  /* AUMENTADO */
     margin-right: 12px;
 }
 .carnet-header h2 {
-    font-size: 15px;
+    font-size: 17px; /* AUMENTADO */
     font-weight: 700;
-    color: #000000; /* CAMBIO REALIZADO AQUÍ: Negro sólido */
+    color: #000000;
     margin: 0;
 }
 
-/* -- CUERPO DEL CARNET CON LAYOUT Y BANDERA CORREGIDOS -- */
+/* -- CUERPO DEL CARNET -- */
 .carnet-body {
     display: flex;
     align-items: flex-start;
