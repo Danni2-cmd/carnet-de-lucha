@@ -123,7 +123,7 @@ function setupForm() {
 
 function displayCarnet(data, showDownloadButton) {
     const carnetWrapper = document.getElementById("carnet-wrapper");
-    // ESTRUCTURA HTML MODIFICADA PARA MEJOR LAYOUT
+    // ESTRUCTURA HTML MODIFICADA
     const carnetHTML = `
       <div class="vista-previa-container">
           <h3>${showDownloadButton ? 'Vista Previa del Carnet' : 'Carnet Verificado'}</h3>
@@ -135,12 +135,12 @@ function displayCarnet(data, showDownloadButton) {
               <div class="carnet-body">
                   <img class="foto-afiliado" src="${data.fotoUrl}" alt="Foto">
                   <div class="carnet-info">
-                      <div class="info-texto">
+                      <div class="info-principal">
                           <strong class="nombre-afiliado">${data.nombre}</strong>
                           <span class="documento-afiliado">${data.tipoDocumento} ${data.numeroDocumento}</span>
                           <div class="rol-barra"><span>${data.rol}</span></div>
                       </div>
-                      <div class="info-contacto">
+                      <div class="info-secundaria">
                           <div class="contacto-texto">
                               <strong>Contacto Emer:</strong> ${data.contacto}<br>
                               <strong>Sangre y RH:</strong> ${data.sangre}
@@ -157,14 +157,13 @@ function displayCarnet(data, showDownloadButton) {
 
     carnetWrapper.innerHTML = carnetHTML;
     
-    // Aplicar color a la barra de rol
     const rolBarra = carnetWrapper.querySelector('.rol-barra');
     if (data.rol.toLowerCase().includes('deportista')) {
-        rolBarra.style.backgroundColor = '#FCD116'; // Amarillo
+        rolBarra.style.backgroundColor = '#FCD116';
     } else if (data.rol.toLowerCase().includes('entrenador')) {
-        rolBarra.style.backgroundColor = '#00843D'; // Verde
+        rolBarra.style.backgroundColor = '#00843D';
     } else {
-        rolBarra.style.backgroundColor = '#333'; // Gris oscuro
+        rolBarra.style.backgroundColor = '#333';
     }
 
     if (document.getElementById("qr-code-container")) {
