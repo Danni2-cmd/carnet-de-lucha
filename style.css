@@ -105,7 +105,7 @@ form button {
 .carnet-header h2 {
     font-size: 15px;
     font-weight: 700;
-    color: #333;
+    color: #000000; /* CAMBIO REALIZADO AQUÍ: Negro sólido */
     margin: 0;
 }
 
@@ -115,7 +115,6 @@ form button {
     align-items: flex-start;
     gap: 15px;
     padding: 16px;
-    /* LÍNEA DE LA BANDERA AÑADIDA DE NUEVO */
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bandera-santander.jpg');
     background-size: cover;
     background-position: center;
@@ -126,15 +125,15 @@ form button {
     object-fit: cover;
     border-radius: 8px;
     flex-shrink: 0;
-    border: 2px solid white; /* Borde para resaltar foto */
+    border: 2px solid white;
 }
 .carnet-info {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     min-width: 0;
-    color: white; /* Color de texto para que contraste */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Sombra para legibilidad */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 .info-texto {
     text-align: left;
@@ -148,7 +147,7 @@ form button {
 }
 .documento-afiliado {
     display: block;
-    color: #ddd; /* Color más suave para el documento */
+    color: #ddd;
     font-size: 14px;
     margin-bottom: 8px;
 }
@@ -175,7 +174,7 @@ form button {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
-    background: white; /* Fondo blanco para el QR */
+    background: white;
     padding: 4px;
     border-radius: 4px;
 }
