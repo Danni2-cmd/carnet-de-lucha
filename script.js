@@ -123,7 +123,7 @@ function setupForm() {
 
 function displayCarnet(data, showDownloadButton) {
     const carnetWrapper = document.getElementById("carnet-wrapper");
-    // ESTRUCTURA HTML MODIFICADA
+    // ESTRUCTURA HTML FINAL
     const carnetHTML = `
       <div class="vista-previa-container">
           <h3>${showDownloadButton ? 'Vista Previa del Carnet' : 'Carnet Verificado'}</h3>
@@ -169,7 +169,7 @@ function displayCarnet(data, showDownloadButton) {
     if (document.getElementById("qr-code-container")) {
         const qrCodeContainer = document.getElementById("qr-code-container");
         const verificationUrl = `${window.location.origin}${window.location.pathname}?id=${data.numeroDocumento}`;
-        new QRCode(qrCodeContainer, { text: verificationUrl, width: 65, height: 65 }); // QR más pequeño
+        new QRCode(qrCodeContainer, { text: verificationUrl, width: 60, height: 60 }); // QR aún más pequeño
     }
 
     if (showDownloadButton) {
