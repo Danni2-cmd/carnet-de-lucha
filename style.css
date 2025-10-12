@@ -109,12 +109,16 @@ form button {
     margin: 0;
 }
 
-/* -- CUERPO DEL CARNET CON NUEVO LAYOUT -- */
+/* -- CUERPO DEL CARNET CON LAYOUT Y BANDERA CORREGIDOS -- */
 .carnet-body {
     display: flex;
-    align-items: flex-start; /* Alinea items arriba */
+    align-items: flex-start;
     gap: 15px;
     padding: 16px;
+    /* LÍNEA DE LA BANDERA AÑADIDA DE NUEVO */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bandera-santander.jpg');
+    background-size: cover;
+    background-position: center;
 }
 .foto-afiliado {
     width: 120px;
@@ -122,12 +126,15 @@ form button {
     object-fit: cover;
     border-radius: 8px;
     flex-shrink: 0;
+    border: 2px solid white; /* Borde para resaltar foto */
 }
 .carnet-info {
     display: flex;
-    flex-direction: column; /* Organiza el texto verticalmente */
+    flex-direction: column;
     flex-grow: 1;
-    min-width: 0; /* Previene desbordamiento */
+    min-width: 0;
+    color: white; /* Color de texto para que contraste */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Sombra para legibilidad */
 }
 .info-texto {
     text-align: left;
@@ -137,10 +144,11 @@ form button {
     font-weight: 900;
     display: block;
     line-height: 1.1;
+    color: white;
 }
 .documento-afiliado {
     display: block;
-    color: #555;
+    color: #ddd; /* Color más suave para el documento */
     font-size: 14px;
     margin-bottom: 8px;
 }
@@ -155,10 +163,10 @@ form button {
     text-transform: uppercase;
 }
 .info-contacto {
-    display: flex; /* Pone el texto y el QR en la misma línea */
-    justify-content: space-between; /* Empuja el texto a la izq y el QR a la der */
-    align-items: flex-end; /* Alinea los items abajo */
-    margin-top: auto; /* Empuja este bloque hacia el fondo */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
     padding-top: 10px;
     text-align: left;
     font-size: 12px;
@@ -167,6 +175,9 @@ form button {
     width: 70px;
     height: 70px;
     flex-shrink: 0;
+    background: white; /* Fondo blanco para el QR */
+    padding: 4px;
+    border-radius: 4px;
 }
 .btn-imprimir {
     padding: 12px 25px;
