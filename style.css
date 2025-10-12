@@ -75,7 +75,7 @@ form button {
     margin-top: 40px;
 }
 
-/* --- ESTILOS DEL CARNET (SECCIÓN MODIFICADA) --- */
+/* --- ESTILOS DEL CARNET (SECCIÓN FINAL) --- */
 .vista-previa-container {
     text-align: center;
 }
@@ -117,16 +117,18 @@ form button {
 /* -- CUERPO DEL CARNET -- */
 .carnet-body {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch; /* Estira los hijos a la altura completa */
     gap: 15px;
     padding: 15px;
     flex-grow: 1;
     min-height: 0;
+    /* BANDERA RESTAURADA */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('bandera-santander.jpg');
+    background-size: cover;
+    background-position: center;
 }
 .foto-afiliado {
     width: 120px;
-    height: 100%; /* La foto ocupa toda la altura del cuerpo */
-    max-height: 180px; /* Límite para que no se deforme */
     object-fit: cover;
     border-radius: 8px;
     flex-shrink: 0;
@@ -136,52 +138,51 @@ form button {
     flex-direction: column;
     flex-grow: 1;
     min-width: 0;
-    height: 100%; /* Ocupa toda la altura disponible */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
-.info-texto {
+.info-principal {
     text-align: left;
+    flex-grow: 1;
 }
 .nombre-afiliado {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 900;
     display: block;
     line-height: 1.1;
-    color: #333;
+    color: white;
 }
 .documento-afiliado {
     display: block;
-    color: #555;
-    font-size: 14px;
-    margin-bottom: 8px;
+    color: #ddd;
+    font-size: 13px;
+    margin-bottom: 5px;
 }
 .rol-barra {
-    padding: 5px 10px;
-    margin: 8px 0;
+    padding: 4px 8px;
+    margin: 5px 0;
     border-radius: 5px;
     text-align: center;
-    color: white;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     text-transform: uppercase;
 }
-/* -- REORGANIZACIÓN DE LA INFO INFERIOR -- */
-.info-contacto {
+/* REORGANIZACIÓN DE LA INFO INFERIOR */
+.info-secundaria {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: auto; /* Empuja este bloque al fondo */
-    padding-top: 10px;
     text-align: left;
-    font-size: 12px;
-    width: 100%;
-}
-.contacto-texto {
-    color: #333;
+    font-size: 11px;
+    flex-shrink: 0; /* Evita que este bloque se encoja */
 }
 #qr-code-container {
-    width: 65px;  /* QR más pequeño */
-    height: 65px; /* QR más pequeño */
+    width: 65px;
+    height: 65px;
     flex-shrink: 0;
+    background: white;
+    padding: 4px;
+    border-radius: 4px;
 }
 .btn-imprimir {
     padding: 12px 25px;
