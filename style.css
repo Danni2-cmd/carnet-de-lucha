@@ -111,48 +111,52 @@ form button {
     text-shadow: none; /* Sin sombra */
 }
 
-/* -- LA BANDERA SE APLICA AL CUERPO DEL CARNET -- */
+/* -- CUERPO DEL CARNET CON FOTO MÁS GRANDE -- */
 .carnet-body {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px; /* Reducimos el espacio entre foto e info */
     padding: 16px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bandera-santander.jpg');
     background-size: cover;
     background-position: center;
 }
 .foto-afiliado {
-    width: 110px;
-    height: 140px;
+    width: 140px;  /* AUMENTADO: Foto más ancha */
+    height: 175px; /* AUMENTADO: Foto más alta */
     object-fit: cover;
     border-radius: 8px;
-    border: 2px solid white; /* Borde blanco para resaltar la foto */
+    border: 3px solid white; /* Borde más grueso para resaltar */
+    flex-shrink: 0; /* Evita que la foto se encoja */
 }
 .carnet-info {
-    font-size: 14px;
+    font-size: 15px; /* Aumentamos ligeramente el tamaño de la fuente base */
     flex-grow: 1;
     text-align: left;
-    color: white; /* Texto blanco para que contraste con el fondo */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Sombra para legibilidad */
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    align-self: flex-start; /* Alinea la información arriba */
 }
 .nombre-afiliado {
-    font-size: 18px;
+    font-size: 20px; /* Nombre más grande */
     font-weight: 900;
     display: block;
     color: white;
+    line-height: 1.2; /* Mejora el espaciado si el nombre es largo */
 }
 .documento-afiliado {
     display: block;
-    color: #ddd; /* Un gris claro para el documento */
-    margin-bottom: 8px;
+    color: #ddd;
+    margin-bottom: 10px; /* Más espacio después del documento */
 }
 #qr-code-container {
     width: 80px;
     height: 80px;
-    align-self: flex-end;
-    background: white; /* Fondo blanco para el QR */
+    align-self: flex-end; /* Mantiene el QR abajo a la derecha */
+    background: white;
     padding: 4px;
     border-radius: 4px;
+    flex-shrink: 0;
 }
 .btn-imprimir {
     padding: 12px 25px;
