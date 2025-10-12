@@ -107,7 +107,7 @@ form button {
     margin-right: 12px;
 }
 .carnet-header h2 {
-    font-size: 15px; /* TAMAÑO AJUSTADO PARA UNA LÍNEA */
+    font-size: 15px;
     font-weight: 900;
     color: #000000;
     margin: 0;
@@ -143,7 +143,7 @@ form button {
 }
 .info-principal {
     text-align: left;
-    flex-grow: 1;
+    flex-grow: 1; /* Esto es clave para empujar la info secundaria hacia abajo */
 }
 .nombre-afiliado {
     font-size: 20px;
@@ -167,17 +167,22 @@ form button {
     font-weight: 700;
     text-transform: uppercase;
 }
+/* REORGANIZACIÓN DE LA INFO INFERIOR */
 .info-secundaria {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     text-align: left;
-    font-size: 11px;
+    font-size: 12px; /* Aumentamos un poco para que sea más legible */
     flex-shrink: 0;
+    margin-top: 4px; /* AJUSTE CLAVE: Reducimos el margen superior para que suba */
+}
+.contacto-texto {
+    line-height: 1.4; /* Mejora el espaciado entre líneas */
 }
 #qr-code-container {
-    width: 65px;
-    height: 65px;
+    width: 60px;  /* QR más pequeño */
+    height: 60px; /* QR más pequeño */
     flex-shrink: 0;
     background: white;
     padding: 4px;
