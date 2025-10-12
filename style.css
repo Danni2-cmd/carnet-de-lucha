@@ -75,7 +75,7 @@ form button {
     margin-top: 40px;
 }
 
-/* --- ESTILOS DEL CARNET (SECCIÓN MODIFICADA) --- */
+/* --- ESTILOS DEL CARNET (SECCIÓN CORREGIDA Y MEJORADA) --- */
 .vista-previa-container {
     text-align: center;
 }
@@ -83,19 +83,18 @@ form button {
     border: 1px solid #ccc;
     background: white;
     border-radius: 12px;
-    padding: 0;
     width: 428px;
     font-family: 'Poppins', Arial, sans-serif;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     overflow: hidden;
 }
 
-/* -- HEADER VUELVE A LA NORMALIDAD -- */
+/* -- HEADER -- */
 .carnet-header {
     display: flex;
     align-items: center;
     padding: 10px 15px;
-    background-color: #f0f4f3; /* Fondo simple y limpio */
+    background-color: #f0f4f3;
     border-bottom: 1px solid #ddd;
 }
 .carnet-header img {
@@ -106,56 +105,67 @@ form button {
 .carnet-header h2 {
     font-size: 15px;
     font-weight: 700;
-    color: #333; /* Color de texto oscuro */
+    color: #333;
     margin: 0;
-    text-shadow: none; /* Sin sombra */
 }
 
-/* -- CUERPO DEL CARNET CON FOTO MÁS GRANDE -- */
+/* -- CUERPO DEL CARNET CON NUEVO LAYOUT -- */
 .carnet-body {
     display: flex;
-    align-items: center;
-    gap: 12px; /* Reducimos el espacio entre foto e info */
+    align-items: flex-start; /* Alinea items arriba */
+    gap: 15px;
     padding: 16px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('bandera-santander.jpg');
-    background-size: cover;
-    background-position: center;
 }
 .foto-afiliado {
-    width: 140px;  /* AUMENTADO: Foto más ancha */
-    height: 175px; /* AUMENTADO: Foto más alta */
+    width: 120px;
+    height: 150px;
     object-fit: cover;
     border-radius: 8px;
-    border: 3px solid white; /* Borde más grueso para resaltar */
-    flex-shrink: 0; /* Evita que la foto se encoja */
+    flex-shrink: 0;
 }
 .carnet-info {
-    font-size: 15px; /* Aumentamos ligeramente el tamaño de la fuente base */
+    display: flex;
+    flex-direction: column; /* Organiza el texto verticalmente */
     flex-grow: 1;
+    min-width: 0; /* Previene desbordamiento */
+}
+.info-texto {
     text-align: left;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-    align-self: flex-start; /* Alinea la información arriba */
 }
 .nombre-afiliado {
-    font-size: 20px; /* Nombre más grande */
+    font-size: 22px;
     font-weight: 900;
     display: block;
-    color: white;
-    line-height: 1.2; /* Mejora el espaciado si el nombre es largo */
+    line-height: 1.1;
 }
 .documento-afiliado {
     display: block;
-    color: #ddd;
-    margin-bottom: 10px; /* Más espacio después del documento */
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+.rol-barra {
+    padding: 5px 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.info-contacto {
+    display: flex; /* Pone el texto y el QR en la misma línea */
+    justify-content: space-between; /* Empuja el texto a la izq y el QR a la der */
+    align-items: flex-end; /* Alinea los items abajo */
+    margin-top: auto; /* Empuja este bloque hacia el fondo */
+    padding-top: 10px;
+    text-align: left;
+    font-size: 12px;
 }
 #qr-code-container {
-    width: 80px;
-    height: 80px;
-    align-self: flex-end; /* Mantiene el QR abajo a la derecha */
-    background: white;
-    padding: 4px;
-    border-radius: 4px;
+    width: 70px;
+    height: 70px;
     flex-shrink: 0;
 }
 .btn-imprimir {
