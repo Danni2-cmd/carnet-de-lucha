@@ -96,28 +96,30 @@ form button {
 .carnet-header {
     display: flex;
     align-items: center;
-    padding: 8px 15px;
+    padding: 8px 12px; /* Menos padding para más espacio */
     background-color: #f0f4f3;
     border-bottom: 1px solid #ddd;
     flex-shrink: 0;
 }
 .carnet-header img {
-    height: 55px;
-    width: 55px;
-    margin-right: 15px;
+    height: 50px; /* Logo ligeramente más pequeño para dar espacio */
+    width: 50px;
+    margin-right: 12px;
 }
 .carnet-header h2 {
-    font-size: 16px;
+    font-size: 15.5px; /* Tamaño ajustado para una línea */
     font-weight: 900;
     color: #000000;
     margin: 0;
     line-height: 1.2;
+    flex-grow: 1; /* Permite que el título ocupe el espacio */
+    text-align: left; /* Alinea el texto a la izquierda del espacio disponible */
 }
 
 /* -- CUERPO DEL CARNET -- */
 .carnet-body {
     display: flex;
-    align-items: stretch; /* Estira los hijos a la altura completa */
+    align-items: stretch;
     gap: 15px;
     padding: 15px;
     flex-grow: 1;
@@ -143,7 +145,7 @@ form button {
 }
 .info-principal {
     text-align: left;
-    flex-grow: 1;
+    flex-grow: 1; /* Empuja la info secundaria hacia abajo */
 }
 .nombre-afiliado {
     font-size: 20px;
@@ -167,14 +169,13 @@ form button {
     font-weight: 700;
     text-transform: uppercase;
 }
-/* REORGANIZACIÓN DE LA INFO INFERIOR */
 .info-secundaria {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     text-align: left;
     font-size: 11px;
-    flex-shrink: 0; /* Evita que este bloque se encoja */
+    flex-shrink: 0;
 }
 #qr-code-container {
     width: 65px;
