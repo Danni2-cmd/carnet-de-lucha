@@ -1,226 +1,180 @@
-/* --- ESTILOS GENERALES Y DEL FORMULARIO (SIN CAMBIOS) --- */
-body {
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-    background: #f0f4f3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-    gap: 30px;
-}
-.main-content {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-form {
-    background: #ffffff;
-    padding: 30px 35px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    max-width: 500px;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-form h1 {
-    color: #026937;
-    margin: 0 0 15px 0;
-    text-align: center;
-    font-size: 24px;
-}
-form label { 
-    font-weight: 600; 
-    font-size: 14px; 
-    color: #333; 
-    margin-bottom: -10px;
-}
-form input, form select, form button {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #bbb;
-    border-radius: 6px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-form button {
-    background-color: #026937;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border-color: #026937;
-    margin-top: 10px;
-    font-size: 16px;
-}
-#cargo-container, #otro-rol-container, #entrenador-tipo-container, #entrenador-estilo-container {
-    display: none;
-    flex-direction: column;
-    gap: 8px;
-}
-#cargo-container[style*="block"],
-#otro-rol-container[style*="block"],
-#entrenador-tipo-container[style*="block"],
-#entrenador-estilo-container[style*="block"] {
-    display: flex;
-}
-#carnet-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    margin-top: 40px;
+// --- IMPORTAR FUNCIONES DE FIREBASE ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+// --- CONFIGURACIÓN DE FIREBASE ---
+const firebaseConfig = {
+    apiKey: "AIzaSyBE9FZI5W4o9856L24m6HrQrA7BdEvjE64",
+    authDomain: "liga-lucha-santander.firebaseapp.com",
+    projectId: "liga-lucha-santander",
+    storageBucket: "liga-lucha-santander.firebasestorage.app",
+    messagingSenderId: "402094242632",
+    appId: "1:402094242632:web:07f67830a46b5eaa2a917d"
+};
+
+// --- INICIALIZACIÓN DE FIREBASE ---
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+// --- CÓDIGO PRINCIPAL ---
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const verificationId = urlParams.get('id');
+    const mainContent = document.querySelector('.main-content');
+    if (verificationId) {
+        if (mainContent) mainContent.style.display = 'none';
+        handleVerification(verificationId);
+    } else {
+        setupForm();
+    }
+});
+
+async function handleVerification(id) {
+    const carnetWrapper = document.getElementById("carnet-wrapper");
+    try {
+        const docRef = doc(db, "afiliados", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            displayCarnet(docSnap.data(), false);
+        } else {
+            carnetWrapper.innerHTML = '<h1>Error: Afiliado no encontrado.</h1>';
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        carnetWrapper.innerHTML = '<h1>Error al verificar el carnet.</h1>';
+    }
 }
 
-/* --- ESTILOS DEL CARNET (SECCIÓN FINAL) --- */
-.vista-previa-container {
-    text-align: center;
-}
-#carnet-a-descargar {
-    width: 428px;
-    height: 270px;
-    border: 1px solid #ccc;
-    background: white;
-    border-radius: 12px;
-    font-family: 'Poppins', Arial, sans-serif;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+function setupForm() {
+    const form = document.getElementById("carnet-form");
+    if (!form) return;
+    
+    const submitBtn = document.getElementById("submit-btn");
+    const statusMessage = document.getElementById("status-message");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        statusMessage.textContent = "Registrando, por favor espera...";
+        statusMessage.style.color = "#333";
+
+        const numeroDocumento = document.getElementById("numeroDocumento").value;
+        const fotoFile = document.getElementById("foto").files[0];
+
+        if (!fotoFile || !numeroDocumento) {
+            alert("Completa el documento y la foto.");
+            submitBtn.disabled = false;
+            statusMessage.textContent = "";
+            return;
+        }
+
+        let rolSeleccionado = document.getElementById("rol").value;
+        let rolParaGuardar = rolSeleccionado;
+        if (rolSeleccionado === "Otro") {
+            rolParaGuardar = document.getElementById("otroRol").value || "ROL SIN ESPECIFICAR";
+        }
+        if (rolSeleccionado === "Entrenador") {
+            const tipo = document.getElementById("tipoEntrenador").value;
+            rolParaGuardar = `Entrenador (${tipo})`;
+            if (tipo === 'Alto Rendimiento') {
+                rolParaGuardar += ` - ${document.getElementById("estiloLucha").value}`;
+            }
+        }
+        if (rolSeleccionado === "Administrativo") {
+            const cargo = document.getElementById("cargo").value;
+            if (cargo) rolParaGuardar += ` - ${cargo}`;
+        }
+
+        try {
+            statusMessage.textContent = "Subiendo foto...";
+            const fotoPath = `fotos/${numeroDocumento}_${Date.now()}`;
+            const storageRef = ref(storage, fotoPath);
+            await uploadBytes(storageRef, fotoFile);
+            const downloadURL = await getDownloadURL(storageRef);
+
+            const afiliadoData = {
+                nombre: document.getElementById("nombre").value.toUpperCase(),
+                tipoDocumento: document.getElementById("tipoDocumento").value,
+                numeroDocumento: numeroDocumento,
+                contacto: document.getElementById("contacto").value,
+                sangre: document.getElementById("sangre").value.toUpperCase(),
+                rol: rolParaGuardar,
+                fotoUrl: downloadURL,
+                fechaRegistro: new Date().toISOString()
+            };
+
+            statusMessage.textContent = "Guardando información...";
+            await setDoc(doc(db, "afiliados", numeroDocumento), afiliadoData);
+            
+            statusMessage.textContent = "¡Registro exitoso!";
+            form.reset();
+            displayCarnet(afiliadoData, true);
+
+        } catch (error) {
+            console.error("Error detallado:", error);
+            statusMessage.textContent = `Error al registrar. Revisa la consola (F12) para más detalles.`;
+        } finally {
+            submitBtn.disabled = false;
+        }
+    });
 }
 
-/* -- HEADER -- */
-.carnet-header {
-    display: flex;
-    align-items: center;
-    padding: 8px 12px;
-    background-color: #f0f4f3;
-    border-bottom: 1px solid #ddd;
-    flex-shrink: 0;
-}
-.carnet-header img {
-    height: 48px;
-    width: 48px;
-    margin-right: 12px;
-}
-.carnet-header h2 {
-    font-size: 15px;
-    font-weight: 900;
-    color: #000000;
-    margin: 0;
-    line-height: 1.2;
-    text-align: left;
-    white-space: nowrap;
-}
+function displayCarnet(data, showDownloadButton) {
+    const carnetWrapper = document.getElementById("carnet-wrapper");
+    // ESTRUCTURA HTML FINAL
+    const carnetHTML = `
+      <div class="vista-previa-container">
+          <h3>${showDownloadButton ? 'Vista Previa del Carnet' : 'Carnet Verificado'}</h3>
+          <div id="carnet-a-descargar">
+              <div class="carnet-header">
+                  <img src="logo.png" alt="Logo Liga">
+                  <h2>LIGA SANTANDEREANA DE LUCHA OLÍMPICA</h2>
+              </div>
+              <div class="carnet-body">
+                  <img class="foto-afiliado" src="${data.fotoUrl}" alt="Foto">
+                  <div class="carnet-info">
+                      <div class="info-principal">
+                          <strong class="nombre-afiliado">${data.nombre}</strong>
+                          <span class="documento-afiliado">${data.tipoDocumento} ${data.numeroDocumento}</span>
+                          <div class="rol-barra"><span>${data.rol}</span></div>
+                      </div>
+                      <div class="info-secundaria">
+                          <div class="contacto-texto">
+                              <strong>Contacto Emer:</strong> ${data.contacto}<br>
+                              <strong>Sangre y RH:</strong> ${data.sangre}
+                          </div>
+                          <div id="qr-code-container"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          ${showDownloadButton ? `<div id="imprimir-btn-container"><button id="imprimir-btn" class="btn-imprimir">Imprimir o Guardar como PDF</button></div>` : ''}
+          ${!showDownloadButton ? `<h3 class="verificado-mensaje">✓ Carnet Válido y Verificado</h3>` : ''}
+      </div>
+    `;
 
-/* -- CUERPO DEL CARNET -- */
-.carnet-body {
-    display: flex;
-    align-items: stretch;
-    gap: 15px;
-    padding: 15px;
-    flex-grow: 1;
-    min-height: 0;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('bandera-santander.jpg');
-    background-size: cover;
-    background-position: center;
-}
-.foto-afiliado {
-    width: 120px;
-    object-fit: cover;
-    border-radius: 8px;
-    flex-shrink: 0;
-}
-.carnet-info {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    min-width: 0;
-    color: white;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
-.info-principal {
-    text-align: left;
-    flex-grow: 1;
-}
-.nombre-afiliado {
-    font-size: 20px;
-    font-weight: 900;
-    display: block;
-    line-height: 1.1;
-    color: white;
-}
-.documento-afiliado {
-    display: block;
-    color: #ddd;
-    font-size: 13px;
-    margin-bottom: 5px;
-}
-.rol-barra {
-    padding: 3px 8px; /* Padding reducido */
-    margin: 5px 0;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 12px; /* ROL MÁS PEQUEÑO */
-    font-weight: 700;
-    text-transform: uppercase;
-}
-/* REORGANIZACIÓN FINAL DE LA INFO INFERIOR */
-.info-secundaria {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    text-align: left;
-    font-size: 11px;
-    flex-shrink: 0;
-}
-#qr-code-container {
-    width: 70px;  /* QR MÁS GRANDE */
-    height: 70px; /* QR MÁS GRANDE */
-    flex-shrink: 0;
-    background: white;
-    padding: 4px;
-    border-radius: 4px;
-}
-.btn-imprimir {
-    padding: 12px 25px;
-    background-color: #00843D;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-}
-.verificado-mensaje {
-    text-align: center;
-    color: #026937;
-}
+    carnetWrapper.innerHTML = carnetHTML;
+    
+    const rolBarra = carnetWrapper.querySelector('.rol-barra');
+    if (data.rol.toLowerCase().includes('deportista')) {
+        rolBarra.style.backgroundColor = '#FCD116';
+    } else if (data.rol.toLowerCase().includes('entrenador')) {
+        rolBarra.style.backgroundColor = '#00843D';
+    } else {
+        rolBarra.style.backgroundColor = '#333';
+    }
 
-/* --- ESTILOS DE IMPRESIÓN (SIN CAMBIOS) --- */
-@media print {
-  body > .main-content {
-    visibility: hidden;
-  }
-  #carnet-wrapper, #carnet-wrapper * {
-    visibility: visible;
-  }
-  #carnet-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-  }
-  #carnet-a-descargar {
-    box-shadow: none !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-  #imprimir-btn-container {
-    display: none !important;
-  }
+    if (document.getElementById("qr-code-container")) {
+        const qrCodeContainer = document.getElementById("qr-code-container");
+        const verificationUrl = `${window.location.origin}${window.location.pathname}?id=${data.numeroDocumento}`;
+        new QRCode(qrCodeContainer, { text: verificationUrl, width: 70, height: 70 }); // QR MÁS GRANDE Y ESCANEABLE
+    }
+
+    if (showDownloadButton) {
+        document.getElementById("imprimir-btn").addEventListener("click", function () {
+            window.print();
+        });
+    }
 }
