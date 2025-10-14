@@ -178,3 +178,4 @@ function displayCarnet(data, showDownloadButton) {
         });
     }
 }
+
